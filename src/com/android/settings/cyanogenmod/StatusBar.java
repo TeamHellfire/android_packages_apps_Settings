@@ -191,6 +191,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         }
+
         return false;
     }
 }
