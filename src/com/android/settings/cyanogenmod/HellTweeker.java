@@ -60,14 +60,14 @@ import com.android.settings.util.Helpers;
 import com.android.settings.util.CMDProcessor;
 import com.android.settings.SettingsPreferenceFragment;
 
-public class PropModder extends SettingsPreferenceFragment implements
+public class HellTweeker extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
-    private static final String TAG = "PropModder";
+    private static final String TAG = "HellTweeker";
     private static final String APPEND_CMD = "echo \"%s=%s\" >> /system/build.prop";
     private static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" /system/build.prop";
     private static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
-    private static final String LOGCAT_CMD = "busybox sed -i \"/log/ c %s\" /system/etc/init.d/72propmodder_script";
+    private static final String LOGCAT_CMD = "busybox sed -i \"/log/ c %s\" /system/etc/init.d/72HellTweeker_script";
     private static final String SDCARD_BUFFER_CMD = "echo %s > /sys/devices/virtual/bdi/179:0/read_ahead_kb";
     private static final String REBOOT_PREF = "reboot";
     private static final String FIND_CMD = "grep -q \"%s\" /system/build.prop";
@@ -112,14 +112,14 @@ public class PropModder extends SettingsPreferenceFragment implements
     private static final String PROX_DELAY_DEFAULT = System.getProperty(PROX_DELAY_PROP);
     private static final String LOGCAT_PREF = "pref_logcat";
     private static final String LOGCAT_PERSIST_PROP = "persist.logcat";
-    private static final String LOGCAT_ALIVE_PATH = "/system/etc/init.d/72propmodder_script";
+    private static final String LOGCAT_ALIVE_PATH = "/system/etc/init.d/72HellTweeker_script";
     private static final String LOGCAT_ENABLE = "rm /dev/log/main";
     private static final String MOD_VERSION_PREF = "pref_mod_version";
     private static final String MOD_VERSION_PROP = "ro.build.display.id";
     private static final String MOD_VERSION_PERSIST_PROP = "persist.build.display.id";
     private static final String MOD_VERSION_DEFAULT = System.getProperty(MOD_VERSION_PROP);
     private static final String MOD_BUTTON_TEXT = "doMod";
-    private static final String MOD_VERSION_TEXT = "Mods by PropModder";
+    private static final String MOD_VERSION_TEXT = "Mods by HellTweeker";
     private static final String SLEEP_PREF = "pref_sleep";
     private static final String SLEEP_PROP = "pm.sleep_mode";
     private static final String SLEEP_PERSIST_PROP = "persist.sleep";
@@ -196,9 +196,9 @@ public class PropModder extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "asking for SU premission " + cmd.su.runWaitFor("echo PROPMODDER").success());
+        Log.i(TAG, "asking for SU premission " + cmd.su.runWaitFor("echo HellTweeker").success());
 
-        addPreferencesFromResource(R.xml.propmodder);
+        addPreferencesFromResource(R.xml.helltweeker);
         prefSet = getPreferenceScreen();
 
         mRebootMsg = (PreferenceScreen) prefSet.findPreference(REBOOT_PREF);
@@ -292,13 +292,13 @@ public class PropModder extends SettingsPreferenceFragment implements
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "com.collective.personalize.fragments.PropModder has been paused");
+        Log.d(TAG, "com.collective.personalize.fragments.HellTweeker has been paused");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "com.collective.personalize.fragments.PropModder is being resumed");
+        Log.d(TAG, "com.collective.personalize.fragments.HellTweeker is being resumed");
     }
 
     /* handle CheckBoxPreference clicks */
@@ -504,7 +504,7 @@ public class PropModder extends SettingsPreferenceFragment implements
                 try {
                     wAlive = new FileWriter("/system/tmp/initscript");
                     //forgive me but without all the \n's the script is one line long O:-)
-                    wAlive.write("#\n#enable init.d script by PropModder\n#\n\n");
+                    wAlive.write("#\n#enable init.d script by HellTweeker\n#\n\n");
                     wAlive.write("log -p I -t boot \"Starting init.d ...\"\n");
                     wAlive.write("busybox run-parts /system/etc/init.d");
                     wAlive.flush();
