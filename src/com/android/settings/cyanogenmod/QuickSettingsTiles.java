@@ -72,7 +72,7 @@ public class QuickSettingsTiles extends Fragment {
         mTileAdapter = new TileAdapter(getActivity(), 0);
         int colCount = Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.QUICK_TILES_PER_ROW, 3);
-        updateTileTextSize(colCount)
+        updateTileTextSize(colCount);
         return mDragView;
     }
 
