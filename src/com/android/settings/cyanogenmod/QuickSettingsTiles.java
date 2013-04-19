@@ -66,12 +66,6 @@ public class QuickSettingsTiles extends Fragment {
             }
         }
         mTileAdapter = new TileAdapter(getActivity(), 0);
-<<<<<<< HEAD
-        int colCount = Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.QUICK_TILES_PER_ROW, 3);
-        updateTileTextSize(colCount);
-=======
->>>>>>> parent of 13fe05a... Quicktile row option:set 3,4,5 tiles per row (1/2)
         return mDragView;
     }
 
