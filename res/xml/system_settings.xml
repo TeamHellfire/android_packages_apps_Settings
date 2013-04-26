@@ -52,9 +52,9 @@
         android:fragment="com.android.settings.cyanogenmod.PowerMenu" />
   
     <PreferenceScreen
-        android:id="@+id/HellTweeker"
+        android:id="@+id/helltweeker"
         android:fragment="com.android.settings.cyanogenmod.HellTweeker"
-        android:title="@string/HellTweeker_title" />
+        android:title="@string/helltweeker_title" />
 
     <!-- Lock clock -->
     <PreferenceScreen

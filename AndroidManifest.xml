@@ -1645,7 +1645,7 @@
         <activity android:name=".ApnEditor" />
 
         <activity android:name=".cyanogenmod.HellTweeker"
-            android:label="HellTweeker" >
+            android:label="helltweeker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.SHORTCUT" />
