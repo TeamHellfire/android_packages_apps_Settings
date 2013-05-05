@@ -90,6 +90,9 @@ public class HellTweeker extends SettingsPreferenceFragment implements
     private static final String MAX_EVENTS_PROP = "windowsmgr.max_events_per_sec";
     private static final String MAX_EVENTS_PERSIST_PROP = "persist.max_events";
     private static final String MAX_EVENTS_DEFAULT = System.getProperty(MAX_EVENTS_PROP);
+    private static final String NAVBAR_PREF = "pref_navbar";
+    private static final String NAVBAR_PROP = "qemu.hw.mainkeys";
+    private static final String NAVBAR_DEFAULT = System.getProperty(NAVBAR_PROP);
     private static final String USB_MODE_PREF = "pref_usb_mode";
     private static final String USB_MODE_PROP = "ro.default_usb_mode";
     private static final String USB_MODE_PERSIST_PROP = "persist.usb_mode";
@@ -168,6 +171,7 @@ public class HellTweeker extends SettingsPreferenceFragment implements
     private ListPreference mRingDelayPref;
     private ListPreference mVmHeapsizePref;
     private ListPreference mProxDelayPref;
+    private ListPreference mNavbarPref;
     private CheckBoxPreference mLogcatPref;
     private EditTextPreference mModVersionPref;
     private ListPreference mSleepPref;
@@ -218,6 +222,9 @@ public class HellTweeker extends SettingsPreferenceFragment implements
         mProxDelayPref.setOnPreferenceChangeListener(this);
 
         mLogcatPref = (CheckBoxPreference) prefSet.findPreference(LOGCAT_PREF);
+
+	mNavbarPref = (ListPreference) prefSet.findPreference(NAVBAR_PREF);
+	mNavbarPref.setOnPreferenceChangeListener(this);
 
         mSleepPref = (ListPreference) prefSet.findPreference(SLEEP_PREF);
         mSleepPref.setOnPreferenceChangeListener(this);
@@ -369,6 +376,9 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             } else if (preference == mModVersionPref) {
                  return doMod(MOD_VERSION_PERSIST_PROP, MOD_VERSION_PROP,
                         newValue.toString());
+            } else if (preference == mNavbarPref) {
+                 return doMod(null, NAVBAR_PROP,
+                        newValue.toString()); 
             } else if (preference == mSleepPref) {
                  return doMod(SLEEP_PERSIST_PROP, SLEEP_PROP,
                         newValue.toString());
@@ -527,6 +537,7 @@ public class HellTweeker extends SettingsPreferenceFragment implements
         String vm;
         String prox;
         String sleep;
+        String nav;
         String tcp;
         String mod;
         String chk;
@@ -551,6 +562,7 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             vm = Helpers.findBuildPropValueOf(VM_HEAPSIZE_PROP);
             prox = Helpers.findBuildPropValueOf(PROX_DELAY_PROP);
             sleep = Helpers.findBuildPropValueOf(SLEEP_PROP);
+            nav = Helpers.findBuildPropValueOf(NAVBAR_PROP);
             tcp = Helpers.findBuildPropValueOf(TCP_STACK_PROP_0);
             mod = Helpers.findBuildPropValueOf(MOD_VERSION_PROP);
             chk = Helpers.findBuildPropValueOf(CHECK_IN_PROP);
@@ -605,6 +617,12 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             } else {
                 mSleepPref.setValue(SLEEP_DEFAULT);
             }
+            if (!nav.equals(DISABLE)) {
+                mNavbarPref.setValue(nav);
+                mNavbarPref.setSummary(String.format(getString(R.string.pref_navbar_alt_summary), nav));
+            } else {
+                mNavbarPref.setValue(NAVBAR_DEFAULT);
+            } 
             if (tcp.equals(TCP_STACK_BUFFER)) {
                 mTcpStackPref.setChecked(true);
             } else {
