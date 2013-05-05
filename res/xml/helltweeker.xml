@@ -71,14 +71,6 @@
             android:entryValues="@array/entries_vm_heapsize"
             android:persistent="true" />
 
-        <ListPreference android:key="pref_fast_up"
-            android:dialogTitle="@string/pref_fast_up_title"
-            android:title="@string/pref_fast_up_title"
-            android:summary="@string/pref_fast_up_summary"
-            android:entries="@array/entries_fast_up_explain"
-            android:entryValues="@array/entries_fast_up"
-            android:persistent="true" />
-
         <ListPreference android:key="pref_prox_delay"
             android:dialogTitle="@string/pref_prox_delay_title"
             android:title="@string/pref_prox_delay_title"
@@ -102,6 +94,14 @@
             android:entries="@array/entries_sleep_explain"
             android:entryValues="@array/entries_sleep"
             android:persistent="true" />
+      
+        <ListPreference android:key="pref_navbar"
+            android:dialogTitle="@string/pref_navbar_title"
+            android:title="@string/pref_navbar_title"
+            android:summary="@string/pref_navbar_summary"
+            android:entries="@array/entries_navbar_explain"
+            android:entryValues="@array/entries_navbar"
+            android:persistent="true" />    
 
         <CheckBoxPreference android:key="pref_tcp_stack"
             android:title="@string/pref_tcp_stack_title"

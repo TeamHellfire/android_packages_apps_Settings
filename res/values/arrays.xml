@@ -1004,17 +1004,18 @@
         <item>512m</item>
         <item>544m</item> 
     </string-array>
-
-    <string-array name="entries_fast_up_explain">
+   
+    <string-array name="entries_navbar_explain">
         <item>Remove</item>
-        <item>HSUPA Disabled (Capped)</item>
-        <item>HSUPA Enabled</item>
-        <item>HSUPA Enabled (Uncapped)</item>
+        <item>Navigation Bar Enabled</item>
+        <item>Navigation Bar Disabled</item>
     </string-array>
 
-    <string-array name="entries_fast_up" translatable="false">
+    <string-array name="entries_navbar" translatable="false">
         <item>disable</item>
-    </string-array>
+        <item>0</item>
+        <item>1</item>
+    </string-array> 
 
     <string-array name="entries_prox_delay_explain">
         <item>Remove</item>

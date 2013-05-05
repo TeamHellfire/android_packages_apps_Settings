@@ -4410,9 +4410,6 @@
     <string name="showbuild_unknown">Unknown</string>
     <string name="showbuild_version">Version</string>
     <string name="showbuild_label">We should look because knowing is half the battle</string>
-    <string name="pref_fast_up_title">HSUPA upload speed hack</string>
-    <string name="pref_fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present (requires reboot)</string>
-    <string name="pref_fast_up_alt_summary">Fast up found active: %s</string>
     <string name="pref_prox_delay_title">Proximity sensor delay</string>
     <string name="pref_prox_delay_summary">When you are in-call screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
     <string name="pref_prox_delay_alt_summary">Proximity sensor set to: %s</string>
@@ -4425,6 +4422,9 @@
     <string name="pref_sleep_title">PM Sleep mode</string>
     <string name="pref_sleep_summary">Modify Nighttime sleep policy</string>
     <string name="pref_sleep_alt_summary">Current Sleep Mode: %s</string>
+    <string name="pref_navbar_title">Navigation Bar</string>
+    <string name="pref_navbar_summary">Show/Hide Navigation Bar</string>
+    <string name="pref_navbar_alt_summary">Navigation Bar: %s</string> 
     <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
     <string name="pref_tcp_stack_summary">Modify the buffer-size for better performance</string>
     <string name="pref_check_in_title">Check in service</string>

@@ -102,10 +102,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
     private static final String VM_HEAPSIZE_PROP = "dalvik.vm.heapsize";
     private static final String VM_HEAPSIZE_PERSIST_PROP = "persist.vm_heapsize";
     private static final String VM_HEAPSIZE_DEFAULT = System.getProperty(VM_HEAPSIZE_PROP);
-    private static final String FAST_UP_PREF = "pref_fast_up";
-    private static final String FAST_UP_PROP = "ro.ril.hsxpa";
-    private static final String FAST_UP_PERSIST_PROP = "persist.fast_up";
-    private static final String FAST_UP_DEFAULT = System.getProperty(FAST_UP_PROP);
     private static final String PROX_DELAY_PREF = "pref_prox_delay";
     private static final String PROX_DELAY_PROP = "mot.proximity.delay";
     private static final String PROX_DELAY_PERSIST_PROP = "persist.prox.delay";
@@ -171,7 +167,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
     private ListPreference mMaxEventsPref;
     private ListPreference mRingDelayPref;
     private ListPreference mVmHeapsizePref;
-    private ListPreference mFastUpPref;
     private ListPreference mProxDelayPref;
     private CheckBoxPreference mLogcatPref;
     private EditTextPreference mModVersionPref;
@@ -218,9 +213,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
 
         mVmHeapsizePref = (ListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
         mVmHeapsizePref.setOnPreferenceChangeListener(this);
-
-        mFastUpPref = (ListPreference) prefSet.findPreference(FAST_UP_PREF);
-        mFastUpPref.setOnPreferenceChangeListener(this);
 
         mProxDelayPref = (ListPreference) prefSet.findPreference(PROX_DELAY_PREF);
         mProxDelayPref.setOnPreferenceChangeListener(this);
@@ -370,9 +362,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
                         newValue.toString());
             } else if (preference == mVmHeapsizePref) {
                 return doMod(VM_HEAPSIZE_PERSIST_PROP, VM_HEAPSIZE_PROP,
-                        newValue.toString());
-            } else if (preference == mFastUpPref) {
-                return doMod(FAST_UP_PERSIST_PROP, FAST_UP_PROP,
                         newValue.toString());
             } else if (preference == mProxDelayPref) {
                  return doMod(PROX_DELAY_PERSIST_PROP, PROX_DELAY_PROP,
@@ -536,7 +525,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
         String maxE;
         String ring;
         String vm;
-        String fast;
         String prox;
         String sleep;
         String tcp;
@@ -561,7 +549,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             maxE = Helpers.findBuildPropValueOf(MAX_EVENTS_PROP);
             ring = Helpers.findBuildPropValueOf(RING_DELAY_PROP);
             vm = Helpers.findBuildPropValueOf(VM_HEAPSIZE_PROP);
-            fast = Helpers.findBuildPropValueOf(FAST_UP_PROP);
             prox = Helpers.findBuildPropValueOf(PROX_DELAY_PROP);
             sleep = Helpers.findBuildPropValueOf(SLEEP_PROP);
             tcp = Helpers.findBuildPropValueOf(TCP_STACK_PROP_0);
@@ -605,12 +592,6 @@ public class HellTweeker extends SettingsPreferenceFragment implements
                 mVmHeapsizePref.setSummary(String.format(getString(R.string.pref_vm_heapsize_alt_summary), vm));
             } else {
                 mVmHeapsizePref.setValue(VM_HEAPSIZE_DEFAULT);
-            }
-            if (!fast.equals(DISABLE)) {
-                mFastUpPref.setValue(fast);
-                mFastUpPref.setSummary(String.format(getString(R.string.pref_fast_up_alt_summary), fast));
-            } else {
-                mFastUpPref.setValue(FAST_UP_DEFAULT);
             }
             if (!prox.equals(DISABLE)) {
                 mProxDelayPref.setValue(prox);
