@@ -141,12 +141,11 @@ public class HellTweeker extends SettingsPreferenceFragment implements
     private static final String THREE_G_PERSIST_PROP = "persist_3g_speed";
     private static final String THREE_G_PROP_0 = "ro.ril.enable.3g.prefix";
     private static final String THREE_G_PROP_1 = "ro.ril.hep";
-    private static final String THREE_G_PROP_2 = FAST_UP_PROP;
-    private static final String THREE_G_PROP_3 = "ro.ril.enable.dtm";
-    private static final String THREE_G_PROP_4 = "ro.ril.gprsclass";
-    private static final String THREE_G_PROP_5 = "ro.ril.hsdpa.category";
-    private static final String THREE_G_PROP_6 = "ro.ril.enable.a53";
-    private static final String THREE_G_PROP_7 = "ro.ril.hsupa.category";
+    private static final String THREE_G_PROP_2 = "ro.ril.enable.dtm";
+    private static final String THREE_G_PROP_3 = "ro.ril.gprsclass";
+    private static final String THREE_G_PROP_4 = "ro.ril.hsdpa.category";
+    private static final String THREE_G_PROP_5= "ro.ril.enable.a53";
+    private static final String THREE_G_PROP_6 = "ro.ril.hsupa.category";
     private static final String GPU_PREF = "pref_gpu";
     private static final String GPU_PERSIST_PROP = "persist_gpu";
     private static final String GPU_PROP = "debug.sf.hw";
@@ -335,12 +334,11 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             value = m3gSpeedPref.isChecked();
             return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 1 : DISABLE))
                 && doMod(null, THREE_G_PROP_1, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 2 : DISABLE))
-                && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_4, String.valueOf(value ? 12 : DISABLE))
-                && doMod(null, THREE_G_PROP_5, String.valueOf(value ? 8 : DISABLE))
-                && doMod(null, THREE_G_PROP_6, String.valueOf(value ? 1 : DISABLE))
-                && doMod(null, THREE_G_PROP_7, String.valueOf(value ? 5 : DISABLE));
+                && doMod(null, THREE_G_PROP_2, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_3, String.valueOf(value ? 12 : DISABLE))
+                && doMod(null, THREE_G_PROP_4, String.valueOf(value ? 8 : DISABLE))
+                && doMod(null, THREE_G_PROP_5, String.valueOf(value ? 1 : DISABLE))
+                && doMod(null, THREE_G_PROP_6, String.valueOf(value ? 5 : DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(GPU_PERSIST_PROP, GPU_PROP, String.valueOf(value ? 1 : DISABLE));
@@ -567,8 +565,8 @@ public class HellTweeker extends SettingsPreferenceFragment implements
             mod = Helpers.findBuildPropValueOf(MOD_VERSION_PROP);
             chk = Helpers.findBuildPropValueOf(CHECK_IN_PROP);
             g0 = Helpers.findBuildPropValueOf(THREE_G_PROP_0);
-            g3 = Helpers.findBuildPropValueOf(THREE_G_PROP_3);
-            g6 = Helpers.findBuildPropValueOf(THREE_G_PROP_6);
+            g3 = Helpers.findBuildPropValueOf(THREE_G_PROP_2);
+            g6 = Helpers.findBuildPropValueOf(THREE_G_PROP_5);
             gpu = Helpers.findBuildPropValueOf(GPU_PROP);
             return null;
         }
