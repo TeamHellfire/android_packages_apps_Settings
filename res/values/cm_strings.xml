@@ -349,6 +349,17 @@
     <string name="cpu_set_on_boot">Set on boot</string>
     <string name="cpu_set_on_boot_summary">Restore the processor settings on boot</string>
 
+    <!-- Performance Settings : GPU settings sub items-->
+    <string name="gpu_cur_freq_title">Current GPU frequency</string>
+    <string name="gpu_title">GPU</string>
+    <string name="gpu_summary">Change GPU governor</string>
+
+    <!-- Performance Settings : GPU governor settings sub items -->
+    <string name="gpu_governor_title">GPU governor</string>
+    <string name="gpu_governor_summary">%S</string>
+    <string name="gpu_governor_set_on_boot">Set on boot</string>
+    <string name="gpu_governor_set_on_boot_summary">Restore the GPU governor settings on boot</string>
+
     <!-- Performance Settings : I/O scheduler settings title -->
     <string name="io_scheds_title">I/O scheduler</string>
     <!-- Performance Settings : I/O scheduler settings summary. -->

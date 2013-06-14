@@ -35,6 +35,7 @@ public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = "BootReceiver";
 
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
+    private static final String GPU_SETTINGS_PROP = "sys.gpugov.restored";
     private static final String IOSCHED_SETTINGS_PROP = "sys.iosched.restored";
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
 
@@ -46,6 +47,14 @@ public class BootReceiver extends BroadcastReceiver {
             configureCPU(ctx);
         } else {
             SystemProperties.set(CPU_SETTINGS_PROP, "false");
+        }
+
+        if (SystemProperties.getBoolean(GPU_SETTINGS_PROP, false) == false
+                && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            SystemProperties.set(GPU_SETTINGS_PROP, "true");
+            configureGPU(ctx);
+        } else {
+            SystemProperties.set(GPU_SETTINGS_PROP, "false");
         }
 
         if (SystemProperties.getBoolean(IOSCHED_SETTINGS_PROP, false) == false
@@ -113,6 +122,32 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.fileWriteOneLine(Processor.GOV_FILE, governor);
             }
             Log.d(TAG, "CPU settings restored.");
+        }
+    }
+
+    private void configureGPU(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        if (prefs.getBoolean(GPU.SOB_PREF, false) == false) {
+            Log.i(TAG, "Restore disabled by user preference.");
+            return;
+        }
+
+        String gpugovernor = prefs.getString(GPU.GPUGOV_PREF, null);
+        String availableGPUGovernorsLine = Utils.fileReadOneLine(GPU.GPUGOV_LIST_FILE);
+        boolean noSettings = ((availableGPUGovernorsLine == null) || (gpugovernor == null));
+        List<String> gpugovernors = null;
+
+        if (noSettings) {
+            Log.d(TAG, "No GPU Governor settings saved. Nothing to restore.");
+        } else {
+            if (availableGPUGovernorsLine != null){
+                gpugovernors = Arrays.asList(availableGPUGovernorsLine.split(" "));
+            }
+            if (gpugovernor != null && gpugovernors != null && gpugovernors.contains(gpugovernor)) {
+                Utils.fileWriteOneLine(GPU.GPUGOV_CUR_FILE, gpugovernor);
+            }
+            Log.d(TAG, "GPU Governor settings restored.");
         }
     }
 
