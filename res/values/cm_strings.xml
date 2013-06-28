@@ -109,7 +109,7 @@
     <string name="device_hostname">Device hostname</string>
 
     <!-- About phone screen,  setting option name-->
-    <string name="mod_version">CyanogenMod version</string>
+    <string name="mod_version">HellFire™ version</string>
     <string name="mod_version_default">Unknown</string>
     <!-- About phone screen, build date of ROM -->
     <string name="build_date">Build date</string>
@@ -146,7 +146,7 @@
 
     <!-- INTERFACE Settings  -->
     <!-- Settings main menu category heading. Interface (Launcher, Themes, System). [CHAR LIMIT=40] -->
-    <string name="header_category_interface">INTERFACE</string>
+    <string name="header_category_interface">HellFire™ INTERFACE</string>
 
     <!-- Launcher settings  -->
     <string name="launcher_settings_title">Launcher</string>
@@ -977,10 +977,10 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <!-- Battery bar -->
     <string name="battery_bar">Battery bar location</string>
     <string name="battery_bar_color">Battery bar color</string>
-    <string name="battery_bar_cat">Battery bar options</string>
-    <string name="battery_bar_style_title">Battery bar style</string>
-    <string name="battery_bar_thickness_title">Battery bar thickness</string>
-    <string name="battery_bar_animate_title">Charging animation</string>
+    <string name="battery_bar_cat">HellFire™ Battery bar options</string>
+    <string name="battery_bar_style_title">HellFire™ Battery bar style</string>
+    <string name="battery_bar_thickness_title">HellFire™ Battery bar thickness</string>
+    <string name="battery_bar_animate_title">HellFire™ Charging animation</string>
     <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
     <string name="dialog_color_picker">Color picker</string>
     <string name="press_color_to_apply">Tap on color to apply</string>
