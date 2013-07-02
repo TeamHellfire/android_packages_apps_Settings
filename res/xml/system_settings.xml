@@ -100,6 +100,8 @@
             android:fragment="com.android.settings.cyanogenmod.NavRing"
             android:title="@string/navigation_ring_title" />
 
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="halo_category"
         android:title="@string/halo_category" >

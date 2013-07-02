@@ -1336,6 +1336,8 @@ public class InstalledAppDetails extends Fragment
     private void setPrivacyGuard(boolean enabled) {
         String packageName = mAppEntry.info.packageName;
         mPm.setPrivacyGuardSetting(packageName, enabled);
+    }
+
     private void setHaloState(boolean state) {
         try {
             mNotificationManager.setHaloStatus(mAppEntry.info.packageName, state);
