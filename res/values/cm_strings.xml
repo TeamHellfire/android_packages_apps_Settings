@@ -1011,4 +1011,18 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="privacy_guard_default_title">Privacy Guard</string>
     <string name="privacy_guard_default_summary">Enable Privacy Guard by default for newly-installed apps</string>
 
+    <!-- HALO -->
+    <string name="halo_hide_title">Hide HALO after activity</string>
+    <string name="halo_hide_summary">HALO will appear for incoming tasks and scroll out of sight after a while</string>
+    <string name="halo_reversed_title">Reverse HALO gestures</string>
+    <string name="halo_reversed_summary">Applies tasking or dragging to the double-tap-swipe gesture</string>
+    <string name="halo_state_title">HALO policy</string>
+    <string name="halo_state_summary">For black/white-listing notifications pinging through HALO</string>
+    <string name="halo_state_black">Black list</string>
+    <string name="halo_state_white">White list</string> 
+
+    
+    <!-- Settings Group: Halo -->
+    <string name="halo_category">HALO</string>
+
 </resources>

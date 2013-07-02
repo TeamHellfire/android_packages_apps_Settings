@@ -604,6 +604,16 @@
         <item>Statusbar</item>
         <item>Top of navbar</item>
         <item>Bottom of navbar</item>
+    <string-array name="entries_halo_state">
+        <item>@string/halo_state_black</item>
+        <item>@string/halo_state_white</item>
+    </string-array>
+
+    <string-array name="values_halo_state" translatable="false">
+        <item>1</item>
+        <item>0</item>
+    </string-array> 
+
     </string-array>
 
     <string-array name="battery_bar_values" translatable="false">

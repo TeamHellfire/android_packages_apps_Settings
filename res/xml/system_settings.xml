@@ -100,6 +100,30 @@
             android:fragment="com.android.settings.cyanogenmod.NavRing"
             android:title="@string/navigation_ring_title" />
 
+    <PreferenceCategory
+        android:key="halo_category"
+        android:title="@string/halo_category" >
+
+        <ListPreference
+            android:key="halo_state"
+            android:dialogTitle="@string/halo_state_title"
+            android:title="@string/halo_state_title"
+            android:summary="@string/halo_state_summary"
+            android:entries="@array/entries_halo_state"
+            android:entryValues="@array/values_halo_state" />
+
+        <CheckBoxPreference
+            android:key="halo_hide"
+            android:title="@string/halo_hide_title"
+            android:summary="@string/halo_hide_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="halo_reversed"
+            android:title="@string/halo_reversed_title"
+            android:summary="@string/halo_reversed_summary"
+            android:defaultValue="true" /> 
+
     </PreferenceCategory>
 
 </PreferenceScreen>

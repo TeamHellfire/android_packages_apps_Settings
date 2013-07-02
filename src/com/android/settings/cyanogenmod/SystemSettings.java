@@ -16,6 +16,7 @@
 
 package com.android.settings.cyanogenmod;
 
+import android.app.INotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
@@ -54,14 +55,22 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
     private static final String KEY_PIE_CONTROL = "pie_control";
     private static final String KEY_EXPANDED_DESKTOP = "expanded_desktop";
     private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
+    private static final String KEY_HALO_STATE = "halo_state";
+    private static final String KEY_HALO_HIDE = "halo_hide";
+    private static final String KEY_HALO_REVERSED = "halo_reversed"; 
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
     private PreferenceScreen mPieControl;
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mExpandedDesktopNoNavbarPref;
+    private ListPreference mHaloState;
+    private CheckBoxPreference mHaloHide;
+    private CheckBoxPreference mHaloReversed; 
 
     private boolean mIsPrimary;
+
+    private INotificationManager mNotificationManager; 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +104,22 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
         }
         if (removeNavbar) {
             prefScreen.removePreference(navbarCategory);
+        }
+        
+        mNotificationManager = INotificationManager.Stub.asInterface(
+                ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+
+            // Only show the hardware keys config on a device that does not have a navbar
+            // and the navigation bar config on phones that has a navigation bar
+            boolean removeKeys = false;
+            IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                    ServiceManager.getService(Context.WINDOW_SERVICE));
+            try {
+                if (windowManager.hasNavigationBar()) {
+                    removeKeys = true;
+                }
+            } catch (RemoteException e) {
+                // Do nothing
         }
 
         // Determine which user is logged in
@@ -158,7 +183,29 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
 
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
+
+        mHaloState = (ListPreference) findPreference(KEY_HALO_STATE);
+        mHaloState.setValue(String.valueOf((isHaloPolicyBlack() ? "1" : "0")));
+        mHaloState.setOnPreferenceChangeListener(this);
+
+        mHaloHide = (CheckBoxPreference) findPreference(KEY_HALO_HIDE);
+        mHaloHide.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.HALO_HIDE, 0) == 1);
+
+        mHaloReversed = (CheckBoxPreference) findPreference(KEY_HALO_REVERSED);
+        mHaloReversed.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.HALO_REVERSED, 1) == 1); 
+
     }
+
+    private boolean isHaloPolicyBlack() {
+        try {
+            return mNotificationManager.isHaloPolicyBlack();
+        } catch (android.os.RemoteException ex) {
+                // System dead
+        }
+        return true;
+    } 
 
     @Override
     public void onResume() {
@@ -192,10 +239,32 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
             boolean value = (Boolean) objValue;
             updateExpandedDesktop(value ? 2 : 0);
             return true;
+        } else if (preference == mHaloState) {
+            boolean state = Integer.valueOf((String) objValue) == 1;
+            try {
+                mNotificationManager.setHaloPolicyBlack(state);
+            } catch (android.os.RemoteException ex) {
+                // System dead
+            }          
+            return true; 
         }
 
         return false;
     }
+
+     @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if  (preference == mHaloHide) {  
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_HIDE, mHaloHide.isChecked()
+                    ? 1 : 0);  
+        } else if (preference == mHaloReversed) {  
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
+                    ? 1 : 0);  
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    } 
 
     private void updateLightPulseDescription() {
         if (Settings.System.getInt(getActivity().getContentResolver(),
