@@ -1021,9 +1021,12 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="halo_state_title">HALO policy</string>
     <string name="halo_state_summary">For black/white-listing notifications pinging through HALO</string>
     <string name="halo_state_black">Black list</string>
-    <string name="halo_state_white">White list</string>  
+    <string name="halo_state_white">White list</string> 
 
-    
+    <!-- We want popups -->
+    <string name="popups_title">Allow floating windows</string>
+    <string name="popups_summary">Controls whether you want floating windows from notification panel</string> 
+
     <!-- Settings Group: Halo -->
     <string name="halo_category">HellFire™ HALO</string>
 
