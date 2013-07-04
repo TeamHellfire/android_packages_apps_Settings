@@ -21,8 +21,12 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -34,6 +38,7 @@ import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -60,15 +65,25 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCKSCREEN_BUTTONS = "lockscreen_buttons";
     private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String KEY_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
+    private static final String KEY_LOCKSCREEN_MUSIC_CONTROLS = "lockscreen_music_controls";
     private static final String KEY_BACKGROUND = "lockscreen_background";
     private static final String KEY_SCREEN_SECURITY = "screen_security";
+
+    private static final String LOCKSCREEN_GENERAL_CATEGORY = "lockscreen_general_category";
+    private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
+    private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
+    private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
 
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mMaximizeWidgets;
+    private CheckBoxPreference mMusicControls;
+    private CheckBoxPreference mEnableWidgets;
+    private CheckBoxPreference mEnableCamera;
 
     private File mWallpaperImage;
     private File mWallpaperTemporary;
+    private DevicePolicyManager mDPM;
 
     private boolean mIsPrimary;
 
@@ -81,6 +96,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
+        PreferenceCategory generalCategory = (PreferenceCategory) findPreference(LOCKSCREEN_GENERAL_CATEGORY);
+        PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -91,25 +108,27 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                 mBatteryStatus.setOnPreferenceChangeListener(this);
             }
 
-            mMaximizeWidgets = (CheckBoxPreference)findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
+            mMaximizeWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS);
             if (!Utils.isPhone(getActivity())) {
-                getPreferenceScreen().removePreference(mMaximizeWidgets);
+                widgetsCategory.removePreference(mMaximizeWidgets);
                 mMaximizeWidgets = null;
             } else {
                 mMaximizeWidgets.setOnPreferenceChangeListener(this);
             }
 
+            mMusicControls = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_MUSIC_CONTROLS);
+            mMusicControls.setOnPreferenceChangeListener(this);
+
             PreferenceScreen lockscreenButtons = (PreferenceScreen) findPreference(KEY_LOCKSCREEN_BUTTONS);
             if (!hasButtons()) {
-                getPreferenceScreen().removePreference(lockscreenButtons);
+                generalCategory.removePreference(lockscreenButtons);
             }
         } else {
             // Secondary user is logged in, remove all primary user specific preferences
-            PreferenceScreen prefScreen = getPreferenceScreen();
-            prefScreen.removePreference(findPreference(KEY_SCREEN_SECURITY));
-            prefScreen.removePreference(findPreference(KEY_ALWAYS_BATTERY));
-            prefScreen.removePreference(findPreference(KEY_LOCKSCREEN_BUTTONS));
-            prefScreen.removePreference(findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS));
+            generalCategory.removePreference(findPreference(KEY_SCREEN_SECURITY));
+            widgetsCategory.removePreference(findPreference(KEY_LOCKSCREEN_MAXIMIZE_WIDGETS));
+            generalCategory.removePreference(findPreference(KEY_ALWAYS_BATTERY));
+            generalCategory.removePreference(findPreference(KEY_LOCKSCREEN_BUTTONS));
         }
 
         // This applies to all users
@@ -117,11 +136,22 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mCustomBackground.setOnPreferenceChangeListener(this);
         updateCustomBackgroundSummary();
 
+        mEnableWidgets = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ENABLE_WIDGETS);
+        mEnableWidgets.setOnPreferenceChangeListener(this);
+        mEnableCamera = (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ENABLE_CAMERA);
+        mEnableCamera.setOnPreferenceChangeListener(this);
+
+        mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        int disabledFeatures = mDPM.getKeyguardDisabledFeatures(null);
+        mEnableWidgets.setChecked((disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL) == 0);
+        mEnableCamera.setChecked((disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_SECURE_CAMERA) == 0);
+
         mWallpaperImage = new File(getActivity().getFilesDir() + "/lockwallpaper");
         mWallpaperTemporary = new File(getActivity().getCacheDir() + "/lockwallpaper.tmp");
 
         // Don't display the lock clock preference if its not installed
-        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
+        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK), widgetsCategory);
     }
 
     private void updateCustomBackgroundSummary() {
@@ -157,6 +187,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             if (mMaximizeWidgets != null) {
                 mMaximizeWidgets.setChecked(Settings.System.getInt(cr,
                         Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
+            }
+            if (mMusicControls != null) {
+                mMusicControls.setChecked(Settings.System.getInt(cr,
+                        Settings.System.LOCKSCREEN_MUSIC_CONTROLS, 1) == 1);
             }
         }
     }
@@ -200,11 +234,35 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             boolean value = (Boolean) objValue;
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, value ? 1 : 0);
             return true;
+        } else if (preference == mMusicControls) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MUSIC_CONTROLS, value ? 1 : 0);
+            return true;
         } else if (preference == mCustomBackground) {
             int selection = mCustomBackground.findIndexOfValue(objValue.toString());
             return handleBackgroundSelection(selection);
+        } else if (preference == mEnableCamera) {
+            updateKeyguardState((Boolean) objValue, mEnableWidgets.isChecked());
+            return true;
+        } else if (preference == mEnableWidgets) {
+            updateKeyguardState(mEnableCamera.isChecked(), (Boolean) objValue);
+            return true;
         }
+
         return false;
+    }
+
+    private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
+        ComponentName dpmAdminName = new ComponentName(getActivity(),
+                DeviceAdminLockscreenReceiver.class);
+        mDPM.setActiveAdmin(dpmAdminName, true);
+        int disabledFeatures = enableWidgets
+                ? DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE
+                : DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL;
+        if (!enableCamera) {
+            disabledFeatures |= DevicePolicyManager.KEYGUARD_DISABLE_SECURE_CAMERA;
+        }
+        mDPM.setKeyguardDisabledFeatures(dpmAdminName, disabledFeatures);
     }
 
     private boolean handleBackgroundSelection(int selection) {
@@ -282,4 +340,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         return false;
     }
+
+    public static class DeviceAdminLockscreenReceiver extends DeviceAdminReceiver {}
 }
