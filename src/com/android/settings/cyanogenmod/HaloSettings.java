@@ -93,7 +93,7 @@ import com.android.settings.Utils;
                 Settings.System.HALO_REVERSED, 1) == 1); 
 
         mHaloColors = (CheckBoxPreference) findPreference(PREF_HALO_COLORS);
-        mHaloColors.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+        mHaloColors.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.HALO_COLORS, 0) == 1);
 
         mHaloEffectColor = (ColorPickerPreference) findPreference(PREF_HALO_EFFECT_COLOR);
@@ -125,9 +125,9 @@ import com.android.settings.Utils;
         return true;
     }
 
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mHaloState) {
-            boolean state = Integer.valueOf((String) objValue) == 1;
+            boolean state = Integer.valueOf((String) newValue) == 1;
             try {
                 mNotificationManager.setHaloPolicyBlack(state);
             } catch (android.os.RemoteException ex) {
@@ -135,7 +135,7 @@ import com.android.settings.Utils;
             }          
             return true; 
         } else if (preference == mWeWantPopups) {
-            boolean checked = (Boolean) objValue;
+            boolean checked = (Boolean) newValue;
                         Settings.System.putInt(getActivity().getContentResolver(),
                                 Settings.System.WE_WANT_POPUPS, checked ? 1 : 0);
             return true;
@@ -193,7 +193,7 @@ import com.android.settings.Utils;
                     Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
                     ? 1 : 0);  
         } else if (preference == mHaloColors) {
-            Settings.System.putInt(mContext.getContentResolver(),
+            Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_COLORS, mHaloColors.isChecked()
                     ? 1 : 0); 
             Helpers.restartSystemUI();
