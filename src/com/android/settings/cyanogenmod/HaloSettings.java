@@ -32,6 +32,8 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+import com.android.settings.cyanogenmod.colorpicker.ColorPickerPreference;
+import com.android.settings.util.Helpers;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -43,12 +45,22 @@ import com.android.settings.Utils;
     private static final String KEY_HALO_HIDE = "halo_hide";
     private static final String KEY_HALO_REVERSED = "halo_reversed"; 
     private static final String KEY_WE_WANT_POPUPS = "show_popup";
+    private static final String PREF_HALO_COLORS = "halo_colors";
+    private static final String PREF_HALO_CIRCLE_COLOR = "halo_circle_color";
+    private static final String PREF_HALO_EFFECT_COLOR = "halo_effect_color";
+    private static final String PREF_HALO_BUBBLE_COLOR = "halo_bubble_color";
+    private static final String PREF_HALO_BUBBLE_TEXT_COLOR = "halo_bubble_text_color"; 
 	
     private CheckBoxPreference mHaloEnabled;
     private ListPreference mHaloState;
     private CheckBoxPreference mHaloHide;
     private CheckBoxPreference mHaloReversed; 
     private CheckBoxPreference mWeWantPopups;
+    private CheckBoxPreference mHaloColors;
+    private ColorPickerPreference mHaloCircleColor;
+    private ColorPickerPreference mHaloEffectColor;
+    private ColorPickerPreference mHaloBubbleColor;
+    private ColorPickerPreference mHaloBubbleTextColor; 
 
     private INotificationManager mNotificationManager; 
     private ContentResolver mContentResolver;
@@ -79,6 +91,22 @@ import com.android.settings.Utils;
         mHaloReversed = (CheckBoxPreference) findPreference(KEY_HALO_REVERSED);
         mHaloReversed.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.HALO_REVERSED, 1) == 1); 
+
+        mHaloColors = (CheckBoxPreference) findPreference(PREF_HALO_COLORS);
+        mHaloColors.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HALO_COLORS, 0) == 1);
+
+        mHaloEffectColor = (ColorPickerPreference) findPreference(PREF_HALO_EFFECT_COLOR);
+        mHaloEffectColor.setOnPreferenceChangeListener(this);
+
+        mHaloCircleColor = (ColorPickerPreference) findPreference(PREF_HALO_CIRCLE_COLOR);
+        mHaloCircleColor.setOnPreferenceChangeListener(this);
+
+        mHaloBubbleColor = (ColorPickerPreference) findPreference(PREF_HALO_BUBBLE_COLOR);
+        mHaloBubbleColor.setOnPreferenceChangeListener(this);
+
+        mHaloBubbleTextColor = (ColorPickerPreference) findPreference(PREF_HALO_BUBBLE_TEXT_COLOR);
+        mHaloBubbleTextColor.setOnPreferenceChangeListener(this); 
 
         int showPopups = Settings.System.getInt(getContentResolver(), Settings.System.WE_WANT_POPUPS, 1);
 
@@ -111,8 +139,40 @@ import com.android.settings.Utils;
                         Settings.System.putInt(getActivity().getContentResolver(),
                                 Settings.System.WE_WANT_POPUPS, checked ? 1 : 0);
             return true;
+        } else if (preference == mHaloCircleColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_CIRCLE_COLOR, intHex);
+            return true;
+        } else if (preference == mHaloEffectColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_EFFECT_COLOR, intHex);
+            Helpers.restartSystemUI();
+            return true;
+        } else if (preference == mHaloBubbleColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_BUBBLE_COLOR, intHex);
+            return true;
+        } else if (preference == mHaloBubbleTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_BUBBLE_TEXT_COLOR, intHex);
+            return true;
         }
-
         return false;
     }
 
@@ -132,7 +192,13 @@ import com.android.settings.Utils;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
                     ? 1 : 0);  
+        } else if (preference == mHaloColors) {
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.HALO_COLORS, mHaloColors.isChecked()
+                    ? 1 : 0); 
+            Helpers.restartSystemUI();
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
+
 }
