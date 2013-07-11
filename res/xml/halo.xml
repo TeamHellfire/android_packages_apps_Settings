@@ -45,7 +45,12 @@
             android:title="@string/halo_reversed_title"
             android:summary="@string/halo_reversed_summary"
             android:dependency="halo_enabled"
-            android:defaultValue="true" /> 
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="halo_gone"
+            android:title="@string/halo_gone_title"
+            android:summary="@string/halo_gone_summary" />  
 
         <CheckBoxPreference
             android:key="show_popup"
@@ -86,6 +91,6 @@
             android:key="halo_bubble_text_color"
             android:title="@string/halo_bubble_text_color_title"
             android:dependency="halo_colors"
-            android:defaultValue="0xFFFFFFFF" /> 
+            android:defaultValue="0xFFFFFFFF" />
 
 </PreferenceScreen>

@@ -43,18 +43,21 @@ import com.android.settings.Utils;
     private static final String KEY_HALO_ENABLED = "halo_enabled";
     private static final String KEY_HALO_STATE = "halo_state";
     private static final String KEY_HALO_HIDE = "halo_hide";
-    private static final String KEY_HALO_REVERSED = "halo_reversed"; 
+    private static final String KEY_HALO_REVERSED = "halo_reversed";
+    private static final String KEY_HALO_GONE = "halo_gone"; 
     private static final String KEY_WE_WANT_POPUPS = "show_popup";
     private static final String PREF_HALO_COLORS = "halo_colors";
     private static final String PREF_HALO_CIRCLE_COLOR = "halo_circle_color";
     private static final String PREF_HALO_EFFECT_COLOR = "halo_effect_color";
     private static final String PREF_HALO_BUBBLE_COLOR = "halo_bubble_color";
-    private static final String PREF_HALO_BUBBLE_TEXT_COLOR = "halo_bubble_text_color"; 
+    private static final String PREF_HALO_BUBBLE_TEXT_COLOR = "halo_bubble_text_color";
+ 
 	
     private CheckBoxPreference mHaloEnabled;
     private ListPreference mHaloState;
     private CheckBoxPreference mHaloHide;
-    private CheckBoxPreference mHaloReversed; 
+    private CheckBoxPreference mHaloReversed;
+    private CheckBoxPreference mHaloGone; 
     private CheckBoxPreference mWeWantPopups;
     private CheckBoxPreference mHaloColors;
     private ColorPickerPreference mHaloCircleColor;
@@ -90,7 +93,11 @@ import com.android.settings.Utils;
 
         mHaloReversed = (CheckBoxPreference) findPreference(KEY_HALO_REVERSED);
         mHaloReversed.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.HALO_REVERSED, 1) == 1); 
+                Settings.System.HALO_REVERSED, 1) == 1);
+
+        mHaloGone = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_GONE);
+        mHaloGone.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.HALO_GONE, 0) == 1);  
 
         mHaloColors = (CheckBoxPreference) findPreference(PREF_HALO_COLORS);
         mHaloColors.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
@@ -192,6 +199,10 @@ import com.android.settings.Utils;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
                     ? 1 : 0);  
+        } else if (preference == mHaloGone) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HALO_GONE, mHaloGone.isChecked()
+                    ? 1 : 0);
         } else if (preference == mHaloColors) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_COLORS, mHaloColors.isChecked()
