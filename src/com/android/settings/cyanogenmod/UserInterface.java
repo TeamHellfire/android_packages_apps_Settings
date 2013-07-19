@@ -33,10 +33,8 @@ import com.android.settings.Utils;
 public class UserInterface extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String DUAL_PANE_PREFS = "dual_pane_prefs";
-    private static final String UMS_NOTIFICATION_CONNECT = "ums_notification_connect";
 
     private ListPreference mDualPanePrefs;
-    private CheckBoxPreference mUmsNotificationConnect;
 
     private ContentResolver mContentResolver;
     private Context mContext;
@@ -51,11 +49,6 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mDualPanePrefs = (ListPreference) prefSet.findPreference(DUAL_PANE_PREFS);
         mDualPanePrefs.setOnPreferenceChangeListener(this);
-
-        mUmsNotificationConnect = (CheckBoxPreference) prefSet.findPreference(UMS_NOTIFICATION_CONNECT);
-
-        mUmsNotificationConnect.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.UMS_NOTIFICATION_CONNECT, 0) == 1));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -64,18 +57,6 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.DUAL_PANE_PREFS, value);
             getActivity().recreate();
-            return true;
-        }
-        return false;
-    }
-
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        boolean value;
-
-        if (preference == mUmsNotificationConnect) {
-            value = mUmsNotificationConnect.isChecked();
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.UMS_NOTIFICATION_CONNECT, value ? 1 : 0);
             return true;
         }
         return false;

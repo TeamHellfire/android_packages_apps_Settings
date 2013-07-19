@@ -85,6 +85,11 @@
         android:key="halo_category"
         android:fragment="com.android.settings.cyanogenmod.HaloSettings"
         android:title="@string/halo_category" />
+
+    <PreferenceScreen
+        android:key="user_interface"
+        android:fragment="com.android.settings.cyanogenmod.UserInterface"
+        android:title="@string/user_interface_title" /> 
  
     <PreferenceScreen
         android:key="pie_control"

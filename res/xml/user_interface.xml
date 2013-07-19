@@ -26,9 +26,4 @@
         android:entries="@array/entries_dual_pane_prefs"
         android:entryValues="@array/values_dual_pane_prefs" />
 
-    <CheckBoxPreference
-        android:key="ums_notification_connect"
-        android:title="@string/ums_notification_connect_title"
-        android:summary="@string/ums_notification_connect_summary" />
-
 </PreferenceScreen>
