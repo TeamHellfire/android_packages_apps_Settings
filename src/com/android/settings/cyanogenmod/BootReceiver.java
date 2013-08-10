@@ -74,6 +74,10 @@ public class BootReceiver extends BroadcastReceiver {
                 SystemProperties.set(KSM_SETTINGS_PROP, "false");
             }
         }
+
+        /* Restore the hardware tunable values */
+        DisplayColor.restore(ctx);
+        VibratorIntensity.restore(ctx);
     }
 
     private void initFreqCapFiles(Context ctx)

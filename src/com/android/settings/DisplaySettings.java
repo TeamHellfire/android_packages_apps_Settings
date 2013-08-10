@@ -44,6 +44,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.android.internal.view.RotationPolicy;
+import com.android.settings.cyanogenmod.DisplayColor;
 import com.android.settings.cyanogenmod.DisplayRotation;
 import com.android.settings.Utils;
 
@@ -66,6 +67,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_HOME_WAKE = "pref_home_wake";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
     private static final String KEY_SCREEN_OFF_ANIMATION = "screen_off_animation";
+    private static final String KEY_DISPLAY_COLOR = "color_calibration";
+    private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
 
     // Strings used for building the summary
     private static final String ROTATION_ANGLE_0 = "0";
@@ -79,6 +82,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mHomeWake;
     private CheckBoxPreference mVolumeWake;
+    private CheckBoxPreference mWakeWhenPluggedOrUnplugged;
     private PreferenceScreen mDisplayRotationPreference;
     private WarnedListPreference mFontSizePref;
 
@@ -197,6 +201,21 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else {
             getPreferenceScreen().removePreference(mScreenOffAnimation);
         }
+
+        if (!DisplayColor.isSupported()) {
+            removePreference(KEY_DISPLAY_COLOR);
+        }
+
+        // Default value for wake-on-plug behavior from config.xml
+        boolean wakeUpWhenPluggedOrUnpluggedConfig = res.getBoolean(
+                com.android.internal.R.bool.config_unplugTurnsOnScreen);
+
+        mWakeWhenPluggedOrUnplugged =
+                (CheckBoxPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
+        mWakeWhenPluggedOrUnplugged.setChecked(Settings.Global.getInt(resolver,
+                Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
+                (wakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0)) == 1);
+
     }
 
     private void updateDisplayRotationPreferenceDescription() {
@@ -439,6 +458,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mScreenOffAnimation) {
             Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_ANIMATION,
                     mScreenOffAnimation.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mWakeWhenPluggedOrUnplugged) {
+            Settings.Global.putInt(getContentResolver(),
+                    Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
+                    mWakeWhenPluggedOrUnplugged.isChecked() ? 1 : 0);
             return true;
         }
 
