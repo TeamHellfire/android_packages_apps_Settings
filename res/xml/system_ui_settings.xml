@@ -97,7 +97,7 @@
         android:title="@string/pie_control_title" />
 
     <PreferenceCategory
-        android:key="navigation_bar_category"
+        android:key="navigation_bar"
         android:title="@string/navigation_bar_category" >
 
         <PreferenceScreen
