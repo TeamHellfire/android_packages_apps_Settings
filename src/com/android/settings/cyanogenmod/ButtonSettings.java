@@ -28,6 +28,8 @@ import android.provider.Settings;
 import android.widget.Toast;
 
 import com.android.settings.R;
+import com.android.settings.cyanogenmod.ButtonBacklightBrightness;
+import com.android.settings.cyanogenmod.KeyboardBacklightBrightness;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
@@ -35,6 +37,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String KEY_ENABLE_CUSTOM_BINDING = "hardware_keys_enable_custom";
     private static final String KEY_HOME_LONG_PRESS = "hardware_keys_home_long_press";
+    private static final String KEY_HOME_DOUBLE_TAP = "hardware_keys_home_double_tap";
     private static final String KEY_MENU_PRESS = "hardware_keys_menu_press";
     private static final String KEY_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
     private static final String KEY_ASSIST_PRESS = "hardware_keys_assist_press";
@@ -45,12 +48,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
     private static final String KEY_SHOW_OVERFLOW = "hardware_keys_show_overflow";
     private static final String KEY_VOLBTN_MUSIC_CTRL = "volbtn_music_controls";
+    private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
+    private static final String KEY_KEYBOARD_BACKLIGHT = "keyboard_backlight";
 
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_MENU = "menu_key";
     private static final String CATEGORY_ASSIST = "assist_key";
     private static final String CATEGORY_APPSWITCH = "app_switch_key";
     private static final String CATEGORY_VOLUME = "volume_keys";
+    private static final String CATEGORY_BACKLIGHT = "key_backlight";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -72,6 +78,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mEnableCustomBindings;
     private ListPreference mHomeLongPressAction;
+    private ListPreference mHomeDoubleTapAction;
     private CheckBoxPreference mHomeWake;
     private ListPreference mMenuPressAction;
     private ListPreference mMenuLongPressAction;
@@ -111,6 +118,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
         final PreferenceCategory volumeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
+        final PreferenceCategory backlightCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_BACKLIGHT);
 
         if (hasHomeKey) {
             mHomeWake = (CheckBoxPreference) findPreference(KEY_HOME_WAKE);
@@ -122,10 +131,29 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                         Settings.System.HOME_WAKE_SCREEN, 1) == 1);
             }
 
+            int defaultLongPressAction = res.getInteger(
+                    com.android.internal.R.integer.config_longPressOnHomeBehavior);
+            if (defaultLongPressAction < ACTION_NOTHING ||
+                    defaultLongPressAction > ACTION_IN_APP_SEARCH) {
+                defaultLongPressAction = ACTION_NOTHING;
+            }
+
+            int defaultDoubleTapAction = res.getInteger(
+                    com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
+            if (defaultDoubleTapAction < ACTION_NOTHING ||
+                    defaultDoubleTapAction > ACTION_IN_APP_SEARCH) {
+                defaultDoubleTapAction = ACTION_NOTHING;
+            }
+
             int longPressAction = Settings.System.getInt(resolver,
                     Settings.System.KEY_HOME_LONG_PRESS_ACTION,
-                    hasAppSwitchKey ? ACTION_NOTHING : ACTION_APP_SWITCH);
+                    defaultLongPressAction);
             mHomeLongPressAction = initActionList(KEY_HOME_LONG_PRESS, longPressAction);
+
+            int doubleTapAction = Settings.System.getInt(resolver,
+                    Settings.System.KEY_HOME_DOUBLE_TAP_ACTION,
+                    defaultDoubleTapAction);
+            mHomeDoubleTapAction = initActionList(KEY_HOME_DOUBLE_TAP, doubleTapAction);
 
             hasAnyBindableKey = true;
         } else {
@@ -207,6 +235,18 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else {
             prefScreen.removePreference(volumeCategory);
         }
+
+        if (ButtonBacklightBrightness.isSupported() || KeyboardBacklightBrightness.isSupported()) {
+            if (!ButtonBacklightBrightness.isSupported()) {
+                backlightCategory.removePreference(findPreference(KEY_BUTTON_BACKLIGHT));
+            }
+
+            if (!KeyboardBacklightBrightness.isSupported()) {
+                backlightCategory.removePreference(findPreference(KEY_KEYBOARD_BACKLIGHT));
+            }
+        } else {
+            prefScreen.removePreference(backlightCategory);
+        }
     }
 
     private ListPreference initActionList(String key, int value) {
@@ -234,6 +274,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         if (preference == mHomeLongPressAction) {
             handleActionListChange(mHomeLongPressAction, newValue,
                     Settings.System.KEY_HOME_LONG_PRESS_ACTION);
+            return true;
+        } else if (preference == mHomeDoubleTapAction) {
+            handleActionListChange(mHomeDoubleTapAction, newValue,
+                    Settings.System.KEY_HOME_DOUBLE_TAP_ACTION);
             return true;
         } else if (preference == mMenuPressAction) {
             handleActionListChange(mMenuPressAction, newValue,
