@@ -30,6 +30,13 @@
                 android:summary="@string/color_calibration_summary"
                 android:persistent="false" />
 
+        <com.android.settings.cyanogenmod.DisplayGamma
+                android:key="gamma_tuning"
+                android:title="@string/gamma_tuning_title_head"
+                android:dialogTitle="@string/gamma_tuning_title_head"
+                android:summary="@string/gamma_tuning_summary_head"
+                android:persistent="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -47,11 +54,11 @@
     <PreferenceCategory
         android:title="@string/headset_category_title" >
 
-        <CheckBoxPreference
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
             android:key="headset_connect_player"
             android:title="@string/headset_connect_player_title"
             android:summary="@string/headset_connect_player_summary"
-            android:persistent="false" />
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
