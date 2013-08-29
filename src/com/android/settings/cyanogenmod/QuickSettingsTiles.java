@@ -58,7 +58,7 @@ public class QuickSettingsTiles extends Fragment {
     private LayoutInflater mInflater;
     private Resources mSystemUiResources;
     private TileAdapter mTileAdapter;
-    private boolean mConfigRibbon = false;
+    private boolean mConfigRibbon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +100,7 @@ public class QuickSettingsTiles extends Fragment {
         if (columnCount != 0) {
             mDragView.setColumnCount(columnCount);
         }
-        mTileAdapter = new TileAdapter(getActivity());
+        mTileAdapter = new TileAdapter(getActivity(), mConfigRibbon);
         return mDragView;
     }
 
@@ -283,10 +283,12 @@ public class QuickSettingsTiles extends Fragment {
         }
 
         private Entry[] mTiles;
+        private boolean mIsRibbon;
 
-        public TileAdapter(Context context) {
+        public TileAdapter(Context context, boolean isRibbon) {
             super(context, android.R.layout.simple_list_item_1);
             mTiles = new Entry[getCount()];
+            mIsRibbon = isRibbon;
             loadItems(context.getResources());
             sortItems();
         }
@@ -311,6 +313,13 @@ public class QuickSettingsTiles extends Fragment {
         }
 
         @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = super.getView(position, convertView, parent);
+            v.setEnabled(isEnabled(position));
+            return v;
+        }
+
+        @Override
         public int getCount() {
             return QuickSettingsUtil.TILES.size();
         }
@@ -322,6 +331,13 @@ public class QuickSettingsTiles extends Fragment {
 
         public String getTileId(int position) {
             return mTiles[position].tile.getId();
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            String usedTiles = QuickSettingsUtil.getCurrentTiles(
+                    getContext(), mIsRibbon);
+            return !(usedTiles.contains(mTiles[position].tile.getId()));
         }
     }
 
