@@ -38,6 +38,8 @@
             android:fragment="com.android.settings.cyanogenmod.NavRing"
             android:title="@string/navigation_ring_title" />
 
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="hellfire_settings"
         android:title="@string/hellfire_settings_category" >
