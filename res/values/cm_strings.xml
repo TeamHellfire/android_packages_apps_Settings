@@ -826,4 +826,15 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="whisperpush_registration_title">Register</string>
     <string name="whisperpush_registration_summary">Register for WhisperPush to enable encrypted SMS.</string>
     <string name="whisperpush_identitykey_title">Review identity keys</string>
+
+    <!-- HellFire specific -->
+    <string name="hellfire_settings_category">HellFire™ Settings</string>
+
+
+    <string name="user_interface_title">HellFire™ Dual Pane</string>
+    <string name="dual_pane_prefs_title">Dual pane preferences</string>
+    <string name="dual_pane_prefs_summary">Choose when to use dual pane preferences</string>
+    <string name="dual_pane_prefs_on">Always</string>
+    <string name="dual_pane_prefs_off">Never</string>
+    <string name="dual_pane_prefs_landscape">Only in landscape</string>
 </resources>
