@@ -369,6 +369,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <!-- General strings -->
     <string name="ok">OK</string>
     <string name="reset">Reset</string>
+    <string name="default_string">Default</string>
 
     <!-- Quiet hours -->
     <string name="quiet_hours_title">Quiet hours</string>
