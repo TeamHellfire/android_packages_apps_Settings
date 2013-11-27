@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,7 +40,6 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String IOSCHED_SETTINGS_PROP = "sys.iosched.restored";
-    private static final String PERF_PROFILE_SETTINGS_PROP = "sys.perf.profile.restored";
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
 
     @Override
@@ -62,14 +60,6 @@ public class BootReceiver extends BroadcastReceiver {
             SystemProperties.set(IOSCHED_SETTINGS_PROP, "false");
         }
 
-        if (SystemProperties.getBoolean(PERF_PROFILE_SETTINGS_PROP, false) == false
-                && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            SystemProperties.set(PERF_PROFILE_SETTINGS_PROP, "true");
-            configurePerfProfile(ctx);
-        } else {
-            SystemProperties.set(PERF_PROFILE_SETTINGS_PROP, "false");
-        }
-
         if (Utils.fileExists(MemoryManagement.KSM_RUN_FILE)) {
             if (SystemProperties.getBoolean(KSM_SETTINGS_PROP, false) == false
                     && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
@@ -85,6 +75,14 @@ public class BootReceiver extends BroadcastReceiver {
         DisplayGamma.restore(ctx);
         VibratorIntensity.restore(ctx);
         DisplaySettings.restore(ctx);
+    }
+
+    private void initFreqCapFiles(Context ctx)
+    {
+        if (Processor.freqCapFilesInitialized) return;
+        Processor.FREQ_MAX_FILE = ctx.getResources().getString(R.string.max_cpu_freq_file);
+        Processor.FREQ_MIN_FILE = ctx.getResources().getString(R.string.min_cpu_freq_file);
+        Processor.freqCapFilesInitialized = true;
     }
 
     private void configureCPU(Context ctx) {
@@ -108,20 +106,21 @@ public class BootReceiver extends BroadcastReceiver {
         if (noSettings) {
             Log.d(TAG, "No CPU settings saved. Nothing to restore.");
         } else {
+            initFreqCapFiles(ctx);
             if (availableGovernorsLine != null){
                 governors = Arrays.asList(availableGovernorsLine.split(" "));
             }
             if (availableFrequenciesLine != null){
                 frequencies = Arrays.asList(availableFrequenciesLine.split(" "));
             }
-            if (governor != null && governors != null && governors.contains(governor)) {
-                Utils.fileWriteOneLine(Processor.GOV_FILE, governor);
-            }
             if (maxFrequency != null && frequencies != null && frequencies.contains(maxFrequency)) {
                 Utils.fileWriteOneLine(Processor.FREQ_MAX_FILE, maxFrequency);
             }
             if (minFrequency != null && frequencies != null && frequencies.contains(minFrequency)) {
                 Utils.fileWriteOneLine(Processor.FREQ_MIN_FILE, minFrequency);
+            }
+            if (governor != null && governors != null && governors.contains(governor)) {
+                Utils.fileWriteOneLine(Processor.GOV_FILE, governor);
             }
             Log.d(TAG, "CPU settings restored.");
         }
@@ -150,29 +149,6 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.fileWriteOneLine(IOScheduler.IOSCHED_LIST_FILE, ioscheduler);
             }
             Log.d(TAG, "I/O scheduler settings restored.");
-        }
-    }
-
-    private void configurePerfProfile(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        final Resources res = ctx.getResources();
-
-        if (prefs.getBoolean(PerformanceProfile.SOB_PREF, false) == false) {
-            Log.i(TAG, "Performance profile restore disabled by user preference.");
-            return;
-        }
-
-        String perfProfileProp = res.getString(R.string.config_perf_profile_prop);
-        if (perfProfileProp == null) {
-            Log.d(TAG, "Performance profiles are not supported by the device. Nothing to restore.");
-        }
-
-        String perfProfile = prefs.getString(PerformanceProfile.PERF_PROFILE_PREF, null);
-        if (perfProfile == null) {
-            Log.d(TAG, "No performance profile settings saved. Nothing to restore.");
-        } else {
-            SystemProperties.set(perfProfileProp, perfProfile);
-            Log.d(TAG, "Performance profile settings restored.");
         }
     }
 
