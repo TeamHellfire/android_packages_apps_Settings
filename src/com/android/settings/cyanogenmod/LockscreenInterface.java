@@ -57,9 +57,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
         PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
 
-        // Dont display the lock clock preference if its not installed
-        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
-
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
         if (mIsPrimary) {
