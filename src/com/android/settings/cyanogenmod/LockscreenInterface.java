@@ -39,6 +39,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
 
     private static final String KEY_ENABLE_WIDGETS = "keyguard_enable_widgets";
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
+    private static final String KEY_LOCK_CLOCK = "lock_clock";
 
     private CheckBoxPreference mEnableKeyguardWidgets;
 
@@ -55,6 +56,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment {
 
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
         PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
+
+        // Dont display the lock clock preference if its not installed
+        removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
