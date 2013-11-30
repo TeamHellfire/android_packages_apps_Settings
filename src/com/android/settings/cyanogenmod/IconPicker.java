@@ -74,11 +74,11 @@ public class IconPicker {
         Intent iconPackIntent = new Intent(ICON_ACTION);
         ComponentName component = iconPackIntent.resolveActivity(mParent.getPackageManager());
 
-        String[] items = new String[component != null ? 3 : 2];
+        String[] items = new String[component != null ? 2 : 1];
         items[0] = mResources.getString(R.string.icon_picker_system_icons_title);
-        items[1] = mResources.getString(R.string.icon_picker_gallery_title);
+        //items[1] = mResources.getString(R.string.icon_picker_gallery_title);
         if (component != null) {
-            items[2] = mResources.getString(R.string.icon_picker_pack_title);
+            items[1] = mResources.getString(R.string.icon_picker_pack_title);
         }
 
         new AlertDialog.Builder(mParent)
