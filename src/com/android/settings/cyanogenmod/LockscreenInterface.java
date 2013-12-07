@@ -139,6 +139,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mEnableKeyguardWidgets = (CheckBoxPreference) findPreference(KEY_ENABLE_WIDGETS);
         if (mEnableKeyguardWidgets != null) {
             if (ActivityManager.isLowRamDeviceStatic()) {
+                    /*|| mLockPatternUtils.isLockScreenDisabled()) {*/
                 // Widgets take a lot of RAM, so disable them on low-memory devices
                 if (widgetsCategory != null) {
                     widgetsCategory.removePreference(findPreference(KEY_ENABLE_WIDGETS));
