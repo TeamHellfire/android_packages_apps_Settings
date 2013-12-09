@@ -1,4 +1,4 @@
-package com.android.settings.chameleonos;
+package com.android.settings.cyanogenmod;
 
 import android.content.Context;
 import android.content.res.TypedArray;
