@@ -4925,6 +4925,11 @@
     <string name="ad_enable_title">Enable</string>
     <string name="ad_enable_summary_on">Active display enabled</string>
     <string name="ad_enable_summary_off">Active display disabled</string>
+    <string name="ad_customizations_title">Customizations</string>
+    <string name="ad_show_date_title">Show date</string>
+    <string name="ad_show_date_summary">Show the date above the clock</string>
+    <string name="ad_show_ampm_title">Show AM/PM</string>
+    <string name="ad_show_ampm_summary">Show AM/PM indicator next to time when using 12hour format</string>
     <string name="ad_text_title">Notification text</string>
     <string name="ad_text_summary">Show the notification text around the ring.</string>
     <string name="ad_all_notifications_title">All notifications</string>

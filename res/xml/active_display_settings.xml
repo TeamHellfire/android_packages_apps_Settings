@@ -72,7 +72,7 @@
             android:summary="@string/ad_show_ampm_summary"
             android:dependency="ad_enable"/>
 
-        <com.android.settings.chameleonos.SeekBarPreference
+        <com.android.settings.cyanogenmod.SeekBarPreference
             android:key="ad_brightness"
             android:persistent="false"
             android:title="@string/ad_brightness_title"
