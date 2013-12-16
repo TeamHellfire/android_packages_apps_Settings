@@ -891,6 +891,16 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="custom_runtime_warning_title">Warning</string>
     <string name="custom_runtime_warning_message">ART is not supported by CyanogenMod. This setting is included for experimentation only and has the potential to cause instability, crashes, data loss or prevent the proper boot of your device. Visit &lt;a href=\"http://source.android.com/devices/tech/dalvik/art.html\"&gt;Introducing ART&lt;/a&gt; for more information.&lt;br/&gt;&lt;br/&gt;We request you do not file bug reports if you have enabled ART as your runtime.&lt;br/&gt;&lt;br/&gt;Are you sure you want to reboot to change runtime from <xliff:g id="old" example="libdvm.so">%1$s</xliff:g> to <xliff:g id="new" example="libart.so">%2$s</xliff:g>?</string>
 
+    <!-- Battery bar -->
+    <string name="battery_bar">Battery bar location</string>
+    <string name="battery_bar_color">Battery bar color</string>
+    <string name="battery_bar_cat">HellFire™ Battery bar options</string>
+    <string name="battery_bar_style_title">HellFire™ Battery bar style</string>
+    <string name="battery_bar_thickness_title">HellFire™ Battery bar thickness</string>
+    <string name="battery_bar_animate_title">HellFire™ Charging animation</string>
+    <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
+
+
     <!-- Lockscreen background -->
     <string name="lockscreen_background">Background</string>
     <string name="lockscreen_background_style_title">Lockscreen background style</string>
