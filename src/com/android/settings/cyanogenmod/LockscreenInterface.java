@@ -59,6 +59,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String TAG = "LockscreenInterface";
 
     private static final String KEY_ENABLE_WIDGETS = "keyguard_enable_widgets";
+    private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
     private static final String LOCKSCREEN_BACKGROUND = "lockscreen_background";
     private static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
@@ -117,6 +118,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mLockColorFill.setSummary(ColorPickerPreference.convertToARGB(
                 Settings.System.getInt(getContentResolver(),
                 Settings.System.LOCKSCREEN_BACKGROUND_COLOR, 0x00000000)));
+
+        // Only add if device has LockClock installed
+        if (!isPackageInstalled("com.cyanogenmod.lockclock")) {
+            widgetsCategory.removePreference(findPreference(KEY_LOCK_CLOCK));
+        }
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
