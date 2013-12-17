@@ -80,6 +80,11 @@
             android:fragment="com.android.settings.cyanogenmod.UserInterface"
             android:title="@string/user_interface_title" />
 
+    	<PreferenceScreen
+            android:id="@+id/helltweeker"
+            android:fragment="com.android.settings.cyanogenmod.helltweeker"
+            android:title="@string/helltweeker_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

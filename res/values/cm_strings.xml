@@ -882,30 +882,10 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="whisperpush_registration_summary">Register for WhisperPush to enable encrypted SMS.</string>
     <string name="whisperpush_identitykey_title">Review identity keys</string>
 
-    <!-- HellFire specific -->
-    <string name="hellfire_settings_category">HellFire™ Settings</string>
-
-
-    <string name="user_interface_title">HellFire™ Dual Pane</string>
-    <string name="dual_pane_prefs_title">Dual pane preferences</string>
-    <string name="dual_pane_prefs_summary">Choose when to use dual pane preferences</string>
-    <string name="dual_pane_prefs_on">Always</string>
-    <string name="dual_pane_prefs_off">Never</string>
-    <string name="dual_pane_prefs_landscape">Only in landscape</string>
 
     <!-- Message of dialog confirming that user wants to restart their device with a new runtime -->
     <string name="custom_runtime_warning_title">Warning</string>
     <string name="custom_runtime_warning_message">ART is not supported by CyanogenMod. This setting is included for experimentation only and has the potential to cause instability, crashes, data loss or prevent the proper boot of your device. Visit &lt;a href=\"http://source.android.com/devices/tech/dalvik/art.html\"&gt;Introducing ART&lt;/a&gt; for more information.&lt;br/&gt;&lt;br/&gt;We request you do not file bug reports if you have enabled ART as your runtime.&lt;br/&gt;&lt;br/&gt;Are you sure you want to reboot to change runtime from <xliff:g id="old" example="libdvm.so">%1$s</xliff:g> to <xliff:g id="new" example="libart.so">%2$s</xliff:g>?</string>
-
-    <!-- Battery bar -->
-    <string name="battery_bar">Battery bar location</string>
-    <string name="battery_bar_color">Battery bar color</string>
-    <string name="battery_bar_cat">HellFire™ Battery bar options</string>
-    <string name="battery_bar_style_title">HellFire™ Battery bar style</string>
-    <string name="battery_bar_thickness_title">HellFire™ Battery bar thickness</string>
-    <string name="battery_bar_animate_title">HellFire™ Charging animation</string>
-    <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
-
 
     <!-- Lockscreen background -->
     <string name="lockscreen_background">Background</string>
@@ -938,4 +918,90 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
 
     <!-- Menu label for reset the battery stats -->
     <string name="menu_stats_reset">Reset</string>
+
+    <!-- HellFire Battery bar -->
+    <string name="battery_bar">Battery bar location</string>
+    <string name="battery_bar_color">Battery bar color</string>
+    <string name="battery_bar_cat">HellFire™ Battery bar options</string>
+    <string name="battery_bar_style_title">HellFire™ Battery bar style</string>
+    <string name="battery_bar_thickness_title">HellFire™ Battery bar thickness</string>
+    <string name="battery_bar_animate_title">HellFire™ Charging animation</string>
+    <string name="battery_bar_animate_summary">The charging animation may result in a poor user experience. Enable at your own discretion.</string>
+
+    <!-- HellFire specific -->
+    <string name="hellfire_settings_category">HellFire™ Settings</string>
+
+    <string name="user_interface_title">HellFire™ Dual Pane</string>
+    <string name="dual_pane_prefs_title">Dual pane preferences</string>
+    <string name="dual_pane_prefs_summary">Choose when to use dual pane preferences</string>
+    <string name="dual_pane_prefs_on">Always</string>
+    <string name="dual_pane_prefs_off">Never</string>
+    <string name="dual_pane_prefs_landscape">Only in landscape</string>
+
+    <!-- Shortcut picker -->
+    <string name="use_custom_app_title">Use custom application</string>
+    <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
+    <string name="group_applications">Applications</string>
+    <string name="custom_app">Custom app</string>
+
+    <!-- Helltweeker -->
+    <string name="helltweeker_title">helltweeker</string>
+    <string name="buildprop_title">/system/build.prop mods</string>
+    <string name="nonprop_cat_title">Mods involving init.d script</string>
+    <string name="main_warning_title">YOU HAVE BEEN WARNED</string>
+    <string name="main_warning_summary">This app was conceived while watching monkeys juggling knives.  It hacks your \'/system/build.prop\' WE ARE NOT RESPONSIBLE FOR ACCIDENTAL KNIFE CUTS! Your device your responsibility</string>
+    <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
+    <string name="pref_wifi_scan_interval_summary">The time between wifi scans when no stored access points are available (requires reboot)</string>
+    <string name="pref_wifi_scan_alt_summary">Time between wifi scans: %s</string>
+    <string name="pref_lcd_density_title">LCD density</string>
+    <string name="pref_lcd_density_summary">This is the screen density allowing more high definition look (requires reboot)</string>
+    <string name="pref_lcd_density_alt_summary">Screen density: %s</string>
+    <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
+    <string name="pref_max_events_summary">This is a runtime value that controls the number of events the system will allow in a second (requires reboot)</string>
+    <string name="pref_max_events_alt_summary">Max number of system events: %s</string>
+    <string name="pref_usb_mode_title">Default USB mode</string>
+    <string name="pref_usb_mode_summary">This decides what the default setting is when you plug in to a computer via USB (requires reboot)</string>
+    <string name="pref_ring_delay_title">Telephone ringer delay</string>
+    <string name="pref_ring_delay_summary">The amount of time from when the system registers an incoming phone call until the ringer starts (requires reboot)</string>
+    <string name="pref_ring_delay_alt_summary">Incoming call Delay: %s</string>
+    <string name="pref_vm_heapsize_title">Dalvik cache heapsize</string>
+    <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to (requires reboot)</string>
+    <string name="pref_vm_heapsize_alt_summary">Dalvik VM cache size: %s</string>
+    <string name="helltweeker_warning_title">ROOT IS REQUIRED</string>
+    <string name="helltweeker_warning">This program changes system properties in /system/build.prop DO NOT USE if you don\'t know what you are doing. We (n00bware, makers of helltweeker) are not responsible for your device PERIOD. You have been warned</string>
+    <string name="showbuild_title">Do you know what is in your build.prop</string>
+    <string name="showbuild_dialog">This is your /system/build.prop</string>
+    <string name="showbuild_loading">Loading build.prop\u2026</string>
+    <string name="showbuild_error">Error loading build.prop\u2026</string>
+    <string name="showbuild_unknown">Unknown</string>
+    <string name="showbuild_version">Version</string>
+    <string name="showbuild_label">We should look because knowing is half the battle</string>
+    <string name="pref_fast_up_title">HSUPA upload speed hack</string>
+    <string name="pref_fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present (requires reboot)</string>
+    <string name="pref_fast_up_alt_summary">Fast up found active: %s</string>
+    <string name="pref_prox_delay_title">Proximity sensor delay</string>
+    <string name="pref_prox_delay_summary">When you are in-call screen is off when the device moves away from your face this delay value controls how long before screen turns on (requires reboot)</string>
+    <string name="pref_prox_delay_alt_summary">Proximity sensor set to: %s</string>
+    <string name="pref_logcat_title">Disable logcat</string>
+    <string name="pref_logcat_summary">Disabling logcat can improve system speed, but makes debugging very difficult</string>
+    <string name="pref_mod_version_title">Change your Build Number</string>
+    <string name="pref_mod_version_summary">This is astetic and doesn\'t improve the system</string>
+    <string name="pref_mod_version_alt_summary">Build Number: %s</string>
+    <string name="pref_mod_version_default">helltweeker!!!</string>
+    <string name="pref_sleep_title">PM Sleep mode</string>
+    <string name="pref_sleep_summary">Modify Nighttime sleep policy</string>
+    <string name="pref_sleep_alt_summary">Current Sleep Mode: %s</string>
+    <string name="pref_navbar_title">Navigation Bar</string>
+    <string name="pref_navbar_summary">Show/Hide Navigation Bar</string>
+    <string name="pref_navbar_alt_summary">Navigation Bar: %s</string>
+    <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
+    <string name="pref_tcp_stack_summary">Modify the buffer-size for better performance</string>
+    <string name="pref_check_in_title">Check in service</string>
+    <string name="pref_check_in_summary">Stop sending system usage data to Google and HTC</string>
+    <string name="pref_sdcard_buffer_title">Sdcard speed hack</string>
+    <string name="pref_sdcard_buffer_summary">Modify the sdcard buffer-size for better performance</string>
+    <string name="pref_g_speed_title">3G Speed Hack</string>
+    <string name="pref_g_speed_summary">Uncap 3g speed</string>
+    <string name="pref_gpu_title">GPU Acceleration</string>
+    <string name="pref_gpu_summary">To enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
 </resources>
