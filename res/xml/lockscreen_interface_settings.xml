@@ -44,7 +44,7 @@
 
         <CheckBoxPreference
             android:key="keyguard_enable_widgets"
-            android:title="@string/security_enable_widgets_title" />
+            android:title="@string/lockscreen_custom_widgets_title" />
 
         <!-- Lock clock -->
         <PreferenceScreen
@@ -60,10 +60,6 @@
             android:key="lockscreen_maximize_widgets"
             android:summary="@string/lockscreen_maximize_widgets_summary"
             android:title="@string/lockscreen_maximize_widgets_title" />
-
-        <CheckBoxPreference
-            android:key="keyguard_enable_widgets"
-            android:title="@string/lockscreen_enable_widgets_title" />
 
     </PreferenceCategory>
 
