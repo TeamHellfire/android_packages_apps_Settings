@@ -21,8 +21,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceGroup;
+import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.preference.CheckBoxPreference;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -37,6 +39,9 @@ public class MoreDeviceSettings extends SettingsPreferenceFragment {
     private static final String KEY_DISPLAY_CALIBRATION_CATEGORY = "display_calibration_category";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
+    private static final String KEY_DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
+
+    private CheckBoxPreference mDTS;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,5 +68,22 @@ public class MoreDeviceSettings extends SettingsPreferenceFragment {
                 calibrationCategory.removePreference(findPreference(KEY_DISPLAY_GAMMA));
             }
         }
+
+        mDTS = (CheckBoxPreference) findPreference(KEY_DOUBLE_TAP_SLEEP_GESTURE);
+        mDTS.setChecked(Settings.System.getInt(getContentResolver(),
+                              Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 0) == 1); 
+    }
+
+    @Override
+     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+         ContentResolver cr = getActivity().getContentResolver();
+         if (preference == mDTS) {
+              Settings.System.putInt(cr, Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
+                     mDTS.isChecked() ? 1 : 0);
+       } else {
+         return super.onPreferenceTreeClick(preferenceScreen, preference);
+       }
+         return true;
+
     }
 }
