@@ -16,8 +16,11 @@
 
 package com.android.settings.cyanogenmod;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -33,11 +36,17 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import android.view.IWindowManager;
+import android.text.Spannable;
+import android.text.TextUtils;
+import android.widget.EditText;
 
 import com.android.settings.colorpicker.ColorPickerPreference;
 
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
+    private static final String STATUS_BAR_CARRIER = "status_bar_carrier";
+    private static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
+    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_BATTERY = "status_bar_battery";
     private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
     private static final String PREF_BATT_BAR = "battery_bar_list";
@@ -46,6 +55,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String PREF_BATT_BAR_WIDTH = "battery_bar_thickness";
     private static final String PREF_BATT_ANIMATE = "battery_bar_animate";
 
+
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
     private ListPreference mBatteryBar;
@@ -53,6 +63,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private ListPreference mBatteryBarThickness;
     private CheckBoxPreference mBatteryBarChargingAnimation;
     private ColorPickerPreference mBatteryBarColor;
+    private CheckBoxPreference mStatusBarTraffic;
+    private CheckBoxPreference mStatusBarCarrier;
+    private PreferenceScreen mCustomStatusBarCarrierLabel;
+
+    private String mCustomStatusBarCarrierLabelText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,18 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
 
         ContentResolver resolver = getActivity().getContentResolver();
+
+        mStatusBarTraffic = (CheckBoxPreference) findPreference(STATUS_BAR_TRAFFIC);
+        mStatusBarTraffic.setChecked((Settings.System.getInt(resolver, Settings.System.STATUS_BAR_TRAFFIC, 0) == 1));
+        mStatusBarTraffic.setOnPreferenceChangeListener(this);
+
+        mStatusBarCarrier = (CheckBoxPreference) findPreference(STATUS_BAR_CARRIER);
+        mStatusBarCarrier.setChecked((Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CARRIER, 0) == 1));
+        mStatusBarCarrier.setOnPreferenceChangeListener(this);
+
+        mCustomStatusBarCarrierLabel = (PreferenceScreen) findPreference(CUSTOM_CARRIER_LABEL);
+        updateCustomLabelTextSummary();
+
 
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
@@ -141,6 +168,17 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
     }
 
+    private void updateCustomLabelTextSummary() {
+        mCustomStatusBarCarrierLabelText = Settings.System.getString(getActivity().getContentResolver(),
+            Settings.System.CUSTOM_CARRIER_LABEL);
+
+        if (TextUtils.isEmpty(mCustomStatusBarCarrierLabelText)) {
+            mCustomStatusBarCarrierLabel.setSummary(R.string.custom_carrier_label_notset);
+        } else {
+            mCustomStatusBarCarrierLabel.setSummary(mCustomStatusBarCarrierLabelText);
+        }
+    }
+
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
@@ -177,6 +215,14 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int val = Integer.parseInt((String) newValue);
             return Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR_THICKNESS, val);
+        } else if (preference == mStatusBarTraffic) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
+            return true;
+        } else if (preference == mStatusBarCarrier) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_CARRIER, value ? 1 : 0);
+            return true;
         }
 
         return false;
@@ -193,5 +239,36 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            final Preference preference) {
+        final ContentResolver resolver = getActivity().getContentResolver();
+        if (preference.getKey().equals(CUSTOM_CARRIER_LABEL)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle(R.string.custom_carrier_label_title);
+            alert.setMessage(R.string.custom_carrier_label_explain);
+
+            // Set an EditText view to get user input
+            final EditText input = new EditText(getActivity());
+            input.setText(TextUtils.isEmpty(mCustomStatusBarCarrierLabelText) ? "" : mCustomStatusBarCarrierLabelText);
+            input.setSelection(input.getText().length());
+            alert.setView(input);
+            alert.setPositiveButton(getResources().getString(R.string.ok),
+                    new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = ((Spannable) input.getText()).toString().trim();
+                    Settings.System.putString(resolver, Settings.System.CUSTOM_CARRIER_LABEL, value);
+                    updateCustomLabelTextSummary();
+                    Intent i = new Intent();
+                    i.setAction(Intent.ACTION_CUSTOM_CARRIER_LABEL_CHANGED);
+                    getActivity().sendBroadcast(i);
+                }
+            });
+            alert.setNegativeButton(getResources().getString(R.string.cancel), null);
+            alert.show();
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
