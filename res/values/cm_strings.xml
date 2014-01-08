@@ -296,6 +296,7 @@
     <string name="lockscreen_widgets_category_title">Widgets</string>
     <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>
     <string name="lockscreen_maximize_widgets_summary">Expand widgets when the screen is turned on</string>
+    <string name="lockscreen_enable_camera_title">Camera widget</string>
 
     <!-- Safe headset volume restore checkbox -->
     <string name="safe_headset_volume_title">Safe headset volume</string>
@@ -556,9 +557,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
 
     <!-- Memory Management -->
     <string name="memory_management_title">Memory management</string>
-    <!-- zRam -->
-    <string name="pref_zram_title">zRam</string>
-    <string name="pref_zram_summary">Compress memory for increased virtual capacity (requires reboot)</string>
     <!-- KSM -->
     <string name="pref_ksm_title">Kernel samepage merging</string>
     <string name="pref_ksm_summary">KSM reduces physical memory requirements and improves performance</string>
@@ -884,7 +882,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="status_bar_style_circle">Circle</string>
     <string name="status_bar_style_hidden">Hidden</string>
     <string name="status_bar_battery_show_percent_title">Show battery status percent</string>
-
     <string name="status_bar_signal_text_title">Signal status style</string>
     <string name="status_bar_signal_style_icon">Icon</string>
     <string name="status_bar_signal_style_text">Text</string>
@@ -893,7 +890,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="status_bar_toggle_info">Automatic brightness is enabled</string>
     <string name="status_bar_notif_count_title">Show notification count</string>
     <string name="status_bar_notif_count_summary">Display the number of pending notifications</string>
-
     <string name="status_bar_double_tap_to_sleep_title">Double-tap to sleep</string>
 
     <!-- Development shortcut -->
