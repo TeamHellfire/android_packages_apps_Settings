@@ -145,24 +145,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
                 getPreferenceScreen(), KEY_ADVANCED_DISPLAY_SETTINGS);
 
-        // respect device default configuration
-        // true fades while false animates
-        boolean electronBeamFadesConfig = getResources().getBoolean(
-                com.android.internal.R.bool.config_animateScreenLights);
-        PreferenceCategory animationOptions =
-            (PreferenceCategory) prefSet.findPreference(KEY_ANIMATION_OPTIONS);
-        mCrtMode = (ListPreference) prefSet.findPreference(KEY_POWER_CRT_MODE);
-        if (!electronBeamFadesConfig && mCrtMode != null) {
-            int crtMode = Settings.System.getInt(getContentResolver(),
-                    Settings.System.SYSTEM_POWER_CRT_MODE, 1);
-            mCrtMode.setValue(String.valueOf(crtMode));
-            mCrtMode.setSummary(mCrtMode.getEntry());
-            mCrtMode.setOnPreferenceChangeListener(this);
-        } else if (animationOptions != null) {
-            prefSet.removePreference(animationOptions);
-        }
-    }
-
         mWakeWhenPluggedOrUnplugged =
                 (CheckBoxPreference) findPreference(KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED);
 
@@ -188,7 +170,23 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
         } else {
             getPreferenceScreen().removePreference(lightPrefs);
-	}
+
+        // respect device default configuration
+        // true fades while false animates
+        boolean electronBeamFadesConfig = getResources().getBoolean(
+                com.android.internal.R.bool.config_animateScreenLights);
+        PreferenceCategory animationOptions =
+            (PreferenceCategory) prefSet.findPreference(KEY_ANIMATION_OPTIONS);
+        mCrtMode = (ListPreference) prefSet.findPreference(KEY_POWER_CRT_MODE);
+        if (!electronBeamFadesConfig && mCrtMode != null) {
+            int crtMode = Settings.System.getInt(getContentResolver(),
+                    Settings.System.SYSTEM_POWER_CRT_MODE, 1);
+            mCrtMode.setValue(String.valueOf(crtMode));
+            mCrtMode.setSummary(mCrtMode.getEntry());
+            mCrtMode.setOnPreferenceChangeListener(this);
+        } else if (animationOptions != null) {
+            prefSet.removePreference(animationOptions);
+        }
     }
 
     private void updateDisplayRotationPreferenceDescription() {
