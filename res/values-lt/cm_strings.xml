@@ -180,10 +180,6 @@
     <string name="notification_vibrate_during_calls_summary">Pokalbio metu apie gaunamus perspėjimus būsite informuotas vibracija</string>
     <string name="volume_adjust_sounds_enable_title">Garso reguliavimo skambesys</string>
     <string name="volume_adjust_sounds_enable_summary">Naudojant telefono garso mygtukus skambėti, kai reguliuojamas garso lygis</string>
-    <string name="lock_pattern_size_3">3x3</string>
-    <string name="lock_pattern_size_4">4x4</string>
-    <string name="lock_pattern_size_5">5x5</string>
-    <string name="lock_pattern_size_6">6x6</string>
     <string name="lockpattern_settings_enable_error_path_title">Rodyti modelio klaidą</string>
     <string name="lockpattern_settings_enable_dots_title">Rodyti modelio taškus</string>
     <string name="lockscreen_vibrate_enabled_title">Vibruoti</string>
@@ -566,7 +562,6 @@ Ryškumo kreivė apskaičiuojama atliekant kubinę \'spline\' interpoliaciją d�
     <string name="power_menu_user_title">Naudotojo keitimas</string>
     <string name="power_menu_sound_title">Garso panelė</string>
     <string name="button_settings">Mygtukai</string>
-    <string name="hardware_keys_enable_custom_title">Leisti pasirinktinius mygtukus</string>
     <string name="hardware_keys_home_key_title">Pagrindinis mygtukas</string>
     <string name="hardware_keys_menu_key_title">Meniu mygtukas</string>
     <string name="hardware_keys_assist_key_title">Paieškos mygtukas</string>
