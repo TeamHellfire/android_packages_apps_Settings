@@ -737,55 +737,6 @@ public class Settings extends PreferenceActivity
         return headerIndex;
     }
 
-    private boolean updateHomeSettingHeaders(Header header) {
-        try {
-            PackageManager pm = getPackageManager();
-            final ArrayList<ResolveInfo> homeApps = new ArrayList<ResolveInfo>();
-            pm.getHomeActivities(homeApps);
-
-            if (homeApps.size() < 2) {
-                Intent prefsIntent = new Intent(Intent.ACTION_MAIN);
-                prefsIntent.addCategory("com.cyanogenmod.category.LAUNCHER_PREFERENCES");
-                List<ResolveInfo> prefsActivities = pm.queryIntentActivities(prefsIntent, 0);
-
-                boolean hasAtleastOneSettings = false;
-                for (ResolveInfo info : homeApps) {
-                    for (ResolveInfo activityInfo : prefsActivities) {
-                        if (info.activityInfo.packageName
-                                .equals(activityInfo.activityInfo.packageName)) {
-                            hasAtleastOneSettings = true;
-                            break;
-                        }
-                    }
-                }
-                if (!hasAtleastOneSettings) {
-                    // When there's only one available home app, omit this settings
-                    // category entirely at the top level UI.  If the user just
-                    // uninstalled the penultimate home app candidiate, we also
-                    // now tell them about why they aren't seeing 'Home' in the list.
-                    if (sShowNoHomeNotice) {
-                        sShowNoHomeNotice = false;
-                        NoHomeDialogFragment.show(this);
-                    }
-                    return false;
-                }
-            }
-
-            // Okay, we're allowing the Home settings category.  Tell it, when
-            // invoked via this front door, that we'll need to be told about the
-            // case when the user uninstalls all but one home app.
-            if (header.fragmentArguments == null) {
-                header.fragmentArguments = new Bundle();
-            }
-            header.fragmentArguments.putBoolean(HomeSettings.HOME_SHOW_NOTICE, true);
-        } catch (Exception e) {
-            // Can't look up the home activity; bail on configuring the icon
-            Log.w(LOG_TAG, "Problem looking up home activity!", e);
-        }
-
-        return true;
-    }
-
     private void getMetaData() {
         try {
             ActivityInfo ai = getPackageManager().getActivityInfo(getComponentName(),
