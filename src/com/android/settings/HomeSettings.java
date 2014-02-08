@@ -107,6 +107,42 @@ public class HomeSettings extends SettingsPreferenceFragment {
 
         // Rebuild the list now that we might have nuked something
         buildHomeActivitiesList();
+
+        // if the previous home app is now gone, fall back to the system one
+        if (requestCode > REQUESTING_UNINSTALL) {
+            // if mCurrentHome has gone null, it means we didn't find the previously-
+            // default home app when rebuilding the list, i.e. it was the one we
+            // just uninstalled.  When that happens we make the system-bundled
+            // home app the active default.
+            if (mCurrentHome == null) {
+                for (int i = 0; i < mPrefs.size(); i++) {
+                    HomeAppPreference pref = mPrefs.get(i);
+                    if (pref.isSystem) {
+                        makeCurrentHome(pref);
+                        break;
+                    }
+                }
+            }
+        }
+
+        boolean hasSettingsPanel = false;
+        for (HomeAppPreference pref : mPrefs) {
+            if (pref.prefsIntent != null) {
+                hasSettingsPanel = true;
+                break;
+            }
+        }
+
+        // If we're down to just one possible home app, back out of this settings
+        // fragment and show a dialog explaining to the user that they won't see
+        // 'Home' settings now until such time as there are multiple available.
+        if (mPrefs.size() < 2 && !hasSettingsPanel) {
+            if (mShowNotice) {
+                mShowNotice = false;
+                Settings.requestHomeNotice();
+            }
+            finishFragment();
+        }
     }
 
     void buildHomeActivitiesList() {
