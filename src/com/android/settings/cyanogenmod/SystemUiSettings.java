@@ -23,6 +23,7 @@ import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
@@ -44,6 +45,7 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
     private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
     private static final String CATEGORY_NAVBAR = "navigation_bar";
     private static final String KEY_SCREEN_GESTURE_SETTINGS = "touch_screen_gesture_settings";
+    private static final String KEY_NAVIGATION_BAR_LEFT = "navigation_bar_left";
 
     // ListView Animations Preference
     private ListPreference mListViewAnimation;
@@ -51,6 +53,7 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
 
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mExpandedDesktopNoNavbarPref;
+    private CheckBoxPreference mNavigationBarLeftPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,9 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
         mExpandedDesktopNoNavbarPref =
                 (CheckBoxPreference) findPreference(KEY_EXPANDED_DESKTOP_NO_NAVBAR);
 
+        // Navigation bar left
+        mNavigationBarLeftPref = (CheckBoxPreference) findPreference(KEY_NAVIGATION_BAR_LEFT);
+
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
                 getPreferenceScreen(), KEY_SCREEN_GESTURE_SETTINGS);
 
@@ -93,6 +99,12 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
                 mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
                 updateExpandedDesktop(expandedDesktopValue);
                 prefScreen.removePreference(mExpandedDesktopNoNavbarPref);
+
+                if (!Utils.isPhone(getActivity())) {
+                    PreferenceCategory navCategory =
+                            (PreferenceCategory) findPreference(CATEGORY_NAVBAR);
+                    navCategory.removePreference(mNavigationBarLeftPref);
+                }
             } else {
                 // Hide no-op "Status bar visible" expanded desktop mode
                 mExpandedDesktopNoNavbarPref.setOnPreferenceChangeListener(this);
