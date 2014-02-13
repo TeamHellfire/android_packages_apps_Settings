@@ -578,6 +578,10 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="pref_use_16bpp_alpha_title">16bit transparency</string>
     <string name="pref_use_16bpp_alpha_summary">Better graphics performance, but lower quality and may cause visual artifacts (requires reboot)</string>
 
+    <!-- Performance : Force high-end graphics -->
+    <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
+    <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (requires reboot)</string>
+
     <!-- Kill app long-press back -->
     <string name="kill_app_longpress_back">Kill app back button</string>
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back button</string>
@@ -1120,16 +1124,11 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="app_ops_allowed_count">Allowed <xliff:g id="count" example="2 times">%s</xliff:g></string>
     <string name="app_ops_ignored_count">Denied <xliff:g id="count" example="2 times">%s</xliff:g></string>
     <string name="app_ops_both_count">Allowed <xliff:g id="count">%1$s</xliff:g>, denied <xliff:g id="count">%2$s</xliff:g></string>
-    <plurals name="app_ops_count">
-        <item quantity="one">once</item>
-        <item quantity="other">%d times</item>
-    </plurals>
-
     <!-- App ops menu options -->
     <string name="app_ops_show_user_apps">Show user apps</string>
     <string name="app_ops_show_system_apps">Show built-in apps</string>
     <string name="app_ops_reset_counters">Reset allow/deny counters</string>
     <string name="app_ops_reset_confirm_title">Confirm counters reset</string>
-    <string name="app_ops_reset_confirm_mesg">Are you sure you wish to reset AppOps counters ?</string>
+    <string name="app_ops_reset_confirm_mesg">Are you sure you wish to reset AppOps counters?</string>
 
 </resources>
