@@ -92,13 +92,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         if (Camera.getNumberOfCameras() == 0) {
             widgetsCategory.removePreference(mEnableCameraWidget);
             mEnableCameraWidget = null;
+            mLockUtils.setCameraEnabled(false);
         } else if (mLockUtils.isSecure()) {
             checkDisabledByPolicy(mEnableCameraWidget,
                     DevicePolicyManager.KEYGUARD_DISABLE_SECURE_CAMERA);
         }
 
         // Remove cLock settings item if not installed
-        if (!isPackageInstalled("com.cyanogenmod.lockclock")) {
+        if (!Utils.isPackageInstalled(getActivity(), "com.cyanogenmod.lockclock")) {
             widgetsCategory.removePreference(findPreference(KEY_LOCK_CLOCK));
         }
 
