@@ -86,8 +86,6 @@
 
     </PreferenceCategory>
 
-<<<<<<< HEAD
-=======
     <PreferenceCategory
         android:key="lockscreen_background_category"
         android:title="@string/lockscreen_background">
@@ -103,5 +101,4 @@
 
     </PreferenceCategory>
 
->>>>>>> upstream/cm-11.0
 </PreferenceScreen>
