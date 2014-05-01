@@ -618,6 +618,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="changelog_unknown">Unknown</string>
     <string name="changelog_version">Version</string>
 
+    <string name="contributor_cloud_title">View contributors</string>
+
     <!-- CM Updater -->
     <string name="cmupdate_settings_title">CyanogenMod updates</string>
     <string name="cmupdate_settings_summary">Check for, view or install available updates</string>
@@ -1296,4 +1298,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="voice_wakeup_activity_title">Activity to launch</string>
     <string name="voice_wakeup_default_activity">Google Now</string>
 
+    <!-- Set Subscription screen: label no sim -->
+    <string name="sub_no_sim">No SIM</string>
+    <string name="multi_sim_entry_format" translatable="false"><xliff:g id="operator">%1$s</xliff:g>-<xliff:g id="index">%2$d</xliff:g></string>
 </resources>
