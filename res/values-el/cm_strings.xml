@@ -361,6 +361,8 @@
   <string name="root_access_apps">Μόνο εφαρμογές</string>
   <string name="root_access_adb">Μόνο ADB</string>
   <string name="root_access_all">Εφαρμογές και ADB</string>
+  <string name="update_recovery_title">Ενημέρωση CM recovery</string>
+  <string name="update_recovery_summary">Ενημέρωση της recovery κατά την εγκατάσταση ενημερώσεων του συστήματος</string>
   <string name="ok">ΟΚ</string>
   <string name="quiet_hours_title">Ώρες ησυχίας</string>
   <string name="quiet_hours_summary">Ρυθμίστε τις ώρες που θέλετε να σιωπά η συσκευή</string>
@@ -414,7 +416,7 @@
   <string name="styles_settings_title">Στυλ</string>
   <string name="icons_settings_title">Εικονίδια</string>
   <string name="fonts_settings_title">Γραμματοσειρές</string>
-  <string name="wallpaper_settings_title">Ταπετσαρίες</string>
+  <string name="wallpaper_settings_title_cm">Ταπετσαρίες</string>
   <string name="lockscreen_wallpaper_settings_title">Ταπετσαρίες οθόνης κλειδώματος</string>
   <string name="bootanim_settings_title">Κινούμενες εικόνες εκκίνησης</string>
   <string name="soundpack_settings_title">Πακέτα ήχου</string>
