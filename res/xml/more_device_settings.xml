@@ -51,26 +51,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/headset_category_title" >
-
-        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-            android:key="headset_connect_player"
-            android:title="@string/headset_connect_player_title"
-            android:summary="@string/headset_connect_player_summary"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/gesture_category_title" >
-
-        <CheckBoxPreference
-            android:key="double_tap_sleep_gesture"
-            android:title="@string/double_tap_to_sleep_title"
-            android:summary="@string/double_tap_to_sleep_summary"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>

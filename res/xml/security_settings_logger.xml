@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- Copyright (C) 2013 The CyanogenMod Project
->>>>>>> upstream/cm-11.0
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,14 +17,12 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:key="cmprivacy" android:title="@string/privacy_settings_cyanogenmod_category">
-        <!-- Anonymous statistics - (CMStats) -->
-        <PreferenceScreen
-                android:key="cmstats"
-                android:title="@string/anonymous_statistics_title"
-                android:summary="@string/anonymous_statistics_summary"
-                android:fragment="com.android.settings.cmstats.AnonymousStats" >
-        </PreferenceScreen>
-    </PreferenceCategory>
+    <Preference
+        android:key="logger"
+        android:title="@string/logger_title"
+        android:summary="@string/logger_summary">
+        <intent android:targetPackage="com.cyngn.logger"
+            android:targetClass="com.cyngn.logger.ui.LoggerPreferenceActivity" />
+    </Preference>
 
 </PreferenceScreen>

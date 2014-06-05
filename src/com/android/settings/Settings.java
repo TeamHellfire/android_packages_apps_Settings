@@ -676,6 +676,10 @@ public class Settings extends PreferenceActivity
                 if(!Utils.isPackageInstalled(this, VOICE_WAKEUP_PACKAGE_NAME)) {
                     target.remove(header);
                 }
+            } else if (id == R.id.more_device_settings) {
+                if (!MoreDeviceSettings.hasItems()) {
+                    target.remove(header);
+                }
             }
 
             if (i < target.size() && target.get(i) == header
@@ -1202,4 +1206,5 @@ public class Settings extends PreferenceActivity
     public static class SystemSettingsActivity extends Settings { /* empty */ }
     public static class QuickSettingsConfigActivity extends Settings { /* empty */ }
     public static class QuietHoursSettingsActivity extends Settings { /* empty */ }
+    public static class ThemeSettingsActivity extends Settings { /* empty */ }
 }
