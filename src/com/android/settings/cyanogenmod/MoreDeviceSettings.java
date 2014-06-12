@@ -16,6 +16,7 @@
 
 package com.android.settings.cyanogenmod;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -48,6 +49,7 @@ public class MoreDeviceSettings extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.more_device_settings);
+        ContentResolver resolver = getContentResolver();
 
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (!VibratorIntensity.isSupported() || vibrator == null || !vibrator.hasVibrator()) {
