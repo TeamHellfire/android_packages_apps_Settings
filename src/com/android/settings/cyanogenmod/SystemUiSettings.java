@@ -37,20 +37,12 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "SystemSettings";
 
-    // ListView Animations Key
-    private static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
-    private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";
-
     private static final String KEY_EXPANDED_DESKTOP = "expanded_desktop";
     private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
     private static final String CATEGORY_EXPANDED_DESKTOP = "expanded_desktop_category";
     private static final String CATEGORY_NAVBAR = "navigation_bar";
     private static final String KEY_SCREEN_GESTURE_SETTINGS = "touch_screen_gesture_settings";
     private static final String KEY_NAVIGATION_BAR_LEFT = "navigation_bar_left";
-
-    // ListView Animations Preference
-    private ListPreference mListViewAnimation;
-    private ListPreference mListViewInterpolator;
 
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mExpandedDesktopNoNavbarPref;
@@ -64,21 +56,6 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
         PreferenceScreen prefScreen = getPreferenceScreen();
         PreferenceCategory expandedCategory =
                 (PreferenceCategory) findPreference(CATEGORY_EXPANDED_DESKTOP);
-
-        // ListView Animations
-        mListViewAnimation = (ListPreference) findPreference(KEY_LISTVIEW_ANIMATION);
-        int listviewanimation = Settings.System.getInt(getContentResolver(),
-                Settings.System.LISTVIEW_ANIMATION, 1);
-        mListViewAnimation.setValue(String.valueOf(listviewanimation));
-        mListViewAnimation.setSummary(mListViewAnimation.getEntry());
-        mListViewAnimation.setOnPreferenceChangeListener(this);
-
-        mListViewInterpolator = (ListPreference) findPreference(KEY_LISTVIEW_INTERPOLATOR);
-        int listviewinterpolator = Settings.System.getInt(getContentResolver(),
-                Settings.System.LISTVIEW_INTERPOLATOR, 0);
-        mListViewInterpolator.setValue(String.valueOf(listviewinterpolator));
-        mListViewInterpolator.setSummary(mListViewInterpolator.getEntry());
-        mListViewInterpolator.setOnPreferenceChangeListener(this);
 
         // Expanded desktop
         mExpandedDesktopPref = (ListPreference) findPreference(KEY_EXPANDED_DESKTOP);
@@ -127,25 +104,10 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
     }
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
-        ContentResolver resolver = getContentResolver();
         if (preference == mExpandedDesktopPref) {
             int expandedDesktopValue = Integer.valueOf((String) objValue);
             updateExpandedDesktop(expandedDesktopValue);
             return true;
-        } else if (preference == mListViewAnimation) {
-            int listviewanimation = Integer.valueOf((String) objValue);
-            int index = mListViewAnimation.findIndexOfValue((String) objValue);
-            Settings.System.putInt(resolver, Settings.System.LISTVIEW_ANIMATION,
-                    listviewanimation);
-            mListViewAnimation.setSummary(mListViewAnimation.getEntries()[index]);
-            return true;
-        } else if (preference == mListViewInterpolator) {
-            int listviewinterpolator = Integer.valueOf((String) objValue);
-            int index = mListViewInterpolator.findIndexOfValue((String) objValue);
-            Settings.System.putInt(resolver, Settings.System.LISTVIEW_INTERPOLATOR,
-                    listviewinterpolator);
-            mListViewInterpolator.setSummary(mListViewInterpolator.getEntries()[index]);
-            return true; 
         } else if (preference == mExpandedDesktopNoNavbarPref) {
             boolean value = (Boolean) objValue;
             updateExpandedDesktop(value ? 2 : 0);
