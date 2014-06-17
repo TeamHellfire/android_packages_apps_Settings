@@ -109,7 +109,7 @@
     <string name="profile_volumeoverrides_title">Volume overrides</string>
     <string name="connection_state_disabled">Disable</string>
     <string name="connection_state_enabled">Enable</string>
-    <string name="volume_override_summary">Set to</string>
+    <string name="volume_override_summary">Set to %1$s/%2$s</string>
 
     <!-- Menu item for managing profiles -->
     <string name="profile_profiles_manage">Profiles</string>
@@ -295,22 +295,6 @@
     <string name="unlock_quick_unlock_control_title">Quick unlock</string>
     <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN/password is entered</string>
     <string name="unlock_buttons_disabled_by_security">Lock screen is secure</string>
-
-    <!-- Slide lock delay -->
-    <string name="delay_and_timeout_title">Lock delay</string>
-    <string name="slide_lock_delay_title">Delay screen lock</string>
-    <string name="slide_lock_timeout_delay_title">Delay after timeout</string>
-    <string name="slide_lock_screenoff_delay_title">Delay after turned off</string>
-    <string name="slide_lock_delay_none">None</string>
-    <string name="slide_lock_delay_1s">1 second</string>
-    <string name="slide_lock_delay_5s">5 seconds</string>
-    <string name="slide_lock_delay_10s">10 seconds</string>
-    <string name="slide_lock_delay_15s">15 seconds</string>
-    <string name="slide_lock_delay_30s">30 seconds</string>
-    <string name="slide_lock_delay_1m">1 minute</string>
-    <string name="slide_lock_delay_5m">5 minutes</string>
-    <string name="slide_lock_delay_10m">10 minutes</string>
-    <string name="slide_lock_delay_30m">30 minutes</string>
 
     <!-- Lock screen widgets -->
     <string name="lockscreen_widgets_category_title">Widgets</string>
@@ -502,8 +486,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="quiet_hours_dim_summary">Disable notification light</string>
     <string name="quiet_hours_haptic">Haptic feedback</string>
     <string name="quiet_hours_haptic_summary">Disable haptic feedback</string>
-    <string name="quiet_hours_active_from">Active from</string>
-    <string name="quiet_hours_active_to">to</string>
+    <string name="quiet_hours_active_period">Active from <xliff:g id="start">%1$s</xliff:g> to <xliff:g id="end">%2$s</xliff:g></string>
 
     <!-- Ringer mute options -->
     <string name="quiet_hours_ringer_allow_all">Ring for all callers</string>
