@@ -81,6 +81,7 @@ import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.cyanogenmod.ButtonSettings;
 import com.android.settings.cyanogenmod.LockscreenInterface;
 import com.android.settings.cyanogenmod.PerformanceSettings;
+import com.android.settings.cyanogenmod.SystemUiSettings;
 import com.android.settings.cyanogenmod.StatusBar;
 import com.android.settings.cyanogenmod.NotificationDrawer;
 import com.android.settings.cyanogenmod.superuser.PolicyNativeFragment;
@@ -187,6 +188,7 @@ public class Settings extends PreferenceActivity
             R.id.interface_section,
             R.id.status_bar_settings,
             R.id.notification_bar_settings,
+            R.id.system_settings,
             R.id.lock_screen_settings,
             R.id.privacy_settings_cyanogenmod,
             R.id.button_settings
@@ -380,6 +382,7 @@ public class Settings extends PreferenceActivity
         BlacklistSettings.class.getName(),
         ApnSettings.class.getName(),
         HomeSettings.class.getName(),
+        SystemUiSettings.class.getName(),
         LockscreenInterface.class.getName(),
         StatusBar.class.getName(),
         NotificationDrawer.class.getName(),
