@@ -283,9 +283,7 @@
 
     <!-- Screen security -->
     <string name="screen_security_category">Screen security</string>
-    <string name="screen_security_title">Lock screen</string>
-    <string name="screen_security_summary">View or change lock screen security, delay and timeout settings</string>
-    <string name="additional_options_title">Additional options</string>
+    <string name="screen_security_summary">View or change lock screen security settings</string>
     <string name="unlock_menu_unlock_title">Menu unlock</string>
     <string name="unlock_menu_unlock_summary">Pressing the menu button unlocks the device</string>
     <string name="unlock_home_unlock_title">Home unlock</string>
@@ -703,19 +701,9 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="gamma_tuning_brightness">Brightness</string>
     <string name="gamma_tuning_saturation">Saturation</string>
 
-    <!-- Category title for headset specific Settings.
-         [CHAR LIMIT=40] -->
-    <string name="headset_category_title">Headset</string>
-
     <!-- Launch music player when headset is connected -->
     <string name="headset_connect_player_title">Launch music app</string>
     <string name="headset_connect_player_summary">Launch the default music app when headset is connected</string>
-
-    <!--  Other device settings -->
-    <string name="more_device_controls_title">More\u2026</string>
-    <string name="more_device_settings_title">Other device options</string>
-    <string name="sensors_motors_title">Sensors &amp; motors</string>
-    <string name="display_calibration_title">Display calibration</string>
 
     <!-- Setting checkbox summary for displaying USB debugging notification -->
     <string name="adb_notify">USB debugging notify</string>
@@ -1135,6 +1123,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="gestures_double_spen_title_head">Double tap</string>
 
     <!-- Gestures Options -->
+    <string name="gestures_settings_header_title">Gestures</string>
     <string name="gestures_action_empty">No action</string>
     <string name="gestures_action_home">Home</string>
     <string name="gestures_action_back">Back</string>
