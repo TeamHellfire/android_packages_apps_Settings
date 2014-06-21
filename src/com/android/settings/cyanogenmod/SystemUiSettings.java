@@ -37,5 +37,20 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "SystemSettings";
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        addPreferencesFromResource(R.xml.system_ui_settings);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //updatePieControlSummary();
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        return false;
     }
 }
