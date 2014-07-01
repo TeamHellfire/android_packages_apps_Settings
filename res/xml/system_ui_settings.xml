@@ -39,6 +39,15 @@
             android:fragment="com.android.settings.cyanogenmod.helltweeker"
             android:title="@string/helltweeker_title" />
 
+    <!-- Active Display -->
+    <PreferenceScreen
+        android:key="active_display"
+        android:fragment="com.android.settings.cyanogenmod.ActiveDisplaySettings"
+        android:icon="@drawable/ic_active_display"
+        android:title="@string/ad_settings_title"
+        android:summary="@string/ad_settings_summary">
+    </PreferenceScreen>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
