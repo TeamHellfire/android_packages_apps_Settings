@@ -107,6 +107,7 @@
     <!-- Search -->
     <string name="settings_search_action_bar_button">Search</string>
     <string name="settings_search_autocompleteview_hint">Search settings</string>
+    <string name="settings_search_loading_text">Loading search data\u2026</string>
 
     <!-- Profile Config screen PreferenceGroup titles -->
     <string name="profile_connectionoverrides_title">Connection overrides</string>
@@ -627,13 +628,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long pressing the back button</string>
 
     <!-- Change Log strings -->
-    <string name="changelog_title">View changelog</string>
+    <string name="changelog_title">Changelog</string>
     <string name="changelog_loading">Loading changelog\u2026</string>
     <string name="changelog_error">Unable to load changelog</string>
     <string name="changelog_unknown">Unknown</string>
     <string name="changelog_version">Version</string>
 
-    <string name="contributor_cloud_title">View contributors</string>
+    <string name="contributor_cloud_title">Contributors</string>
 
     <!-- CM Updater -->
     <string name="cmupdate_settings_title">CyanogenMod updates</string>
@@ -1121,8 +1122,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="pref_gpu_summary">To enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
 
     <!-- CM Legal -->
-    <string name="cmlicense_title">CyanogenMod Legal</string>
-    <string name="settings_cmlicense_activity_title">CyanogenMod Legal</string>
+    <string name="cmlicense_title">CyanogenMod legal</string>
+    <string name="settings_cmlicense_activity_title">CyanogenMod legal</string>
     <string name="settings_cmlicense_activity_unreachable">You don\'t have a data connection. To view this information now, go to %s from any computer connected to the Internet.</string>
 
     <!-- Stylus Icon -->
